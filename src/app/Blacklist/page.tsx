@@ -1,16 +1,15 @@
-﻿'use client'
+'use client'
 
 import Nav from '@/components/navbar'
-import Accounts from '@/page/Accounts/Accounts'
-import Dashboard from '@/page/Dashboard/Index'
+import Blacklist from '@/page/Blacklist'
+
 import React from 'react'
 
 export default function page() {
   return (
     <div className='flex'>
     <Nav/>
-    <Accounts/>
+    <Blacklist/>
     </div>
   )
 }
-

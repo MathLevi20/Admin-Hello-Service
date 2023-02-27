@@ -1,11 +1,11 @@
 import { ChangeEvent, useContext, useState } from 'react'
-import { redirect, useNavigate } from 'react-router-dom'
+import { useRouter } from 'next/navigation';
 import { AuthContext } from '../../contexts/Auth/AuthContext'
 import axios, { AxiosError } from 'axios'
 import { useAuth } from '../../contexts/auth_context'
-
+import Image from 'next/image';
 export const Login = () => {
-  const navigate = useNavigate()
+  const navigate = useRouter()
   const { signIn } = useAuth()
   const [loading, setLoading] = useState(false)
 
@@ -49,10 +49,10 @@ export const Login = () => {
           localStorage.setItem('id', response.data.id)
           console.log('asv')
           if (response.data.signin === true) {
-            return navigate('/Services')
+            return navigate.push('/Services')
           } else alert('senha errada')
 
-          return navigate('/Login')
+          return navigate.push('/Login')
         })
         .catch(function (error: any) {
           console.error(error)
@@ -64,10 +64,12 @@ export const Login = () => {
     <div>
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="grid grid-rows-1 bg-slate-500 p-10  rounded-md ">
-          <img
-            src="https://ojkprgyzivdeqwjymnvn.supabase.co/storage/v1/object/sign/admin/Components/logo.svg?token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1cmwiOiJhZG1pbi9Db21wb25lbnRzL2xvZ28uc3ZnIiwidHJhbnNmb3JtYXRpb25zIjoiIiwiaWF0IjoxNjcwNTA2ODIwLCJleHAiOjE5ODU4NjY4MjB9.eK6Q4dwfLv-BVCrdpt4uaMDz5XG--wXbck0thnEGSDg"
+          <Image
+            src=""
             className={`cursor-pointer pb-7 mx-auto p-3"`}
             width="100"
+            alt="icon"
+          
           />
           <input
             className="p-2 border-black-900 border"

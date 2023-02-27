@@ -2,7 +2,7 @@
 import { flushSync } from 'react-dom'
 import ContractPost from './PostContract'
 import Set from './PutContract'
-import Contract from '../../pages/Contract/Contract'
+import Contract from './Contract'
 import { API, UserId } from '../../Services/client'
 import Loading from '../../components/Loading'
 import { title } from 'process'

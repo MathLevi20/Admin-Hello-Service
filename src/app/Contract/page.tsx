@@ -1,7 +1,7 @@
-﻿'use client'
+'use client'
 
 import Nav from '@/components/navbar'
-import Accounts from '@/page/Accounts/Accounts'
+import Contract from '@/page/Contract/Contract'
 import Dashboard from '@/page/Dashboard/Index'
 import React from 'react'
 
@@ -9,8 +9,7 @@ export default function page() {
   return (
     <div className='flex'>
     <Nav/>
-    <Accounts/>
+    <Contract/>
     </div>
   )
 }
-

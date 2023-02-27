@@ -1,5 +1,5 @@
 ﻿import React from 'react'
-import Contract_list from '../Contract'
+import Contract_list from '.'
 import Nav from '../../components/Nav'
 
 const Contract = () => {

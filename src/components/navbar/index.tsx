@@ -36,7 +36,7 @@ export const Nav = () => {
     {
       title: 'BlackList ',
       src: '/Lock.png',
-      path: '/BlackList'
+      path: '/Blacklist'
     },
     {
       title: 'Claiming',

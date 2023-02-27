@@ -1,10 +1,9 @@
 ﻿import { useEffect, useState } from 'react'
-import useFetch from 'react-fetch-hook'
 import Loading from '../../components/Loading'
-import Nav from '../../components/Nav'
+import Nav from '../../components/navbar/index'
 import { API } from '../../Services/client'
 import Pagination from '../../components/pagination'
-
+import Image from 'next/image'
 interface User_Ban {
   avatar: any
   cpf: number
@@ -29,9 +28,7 @@ export const Blacklist = () => {
   console.log(isLoading)
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/profile/all')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setData(response.data)
           console.log(data)
@@ -60,7 +57,6 @@ export const Blacklist = () => {
 
   function UnBan(data: any) {
     API.patch('/sanction/revogue', data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setData(response.data)
         console.log(data)
@@ -142,7 +138,7 @@ export const Blacklist = () => {
                 key={data.id}
               >
                 <div className="grid grid-cols-7 gap-2 ease-in transition-opacity-80 ">
-                  <img
+                  <Image
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'
@@ -150,6 +146,8 @@ export const Blacklist = () => {
                         : data.avatar
                     }
                     width="40"
+                    height={50}
+                    alt="as"
                   />
                   <div className="mx-auto">{data.username}</div>
                   <button

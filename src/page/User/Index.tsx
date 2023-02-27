@@ -50,9 +50,7 @@ const User = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/profile/'+ Id)
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setData(response.data)
           console.log(data)

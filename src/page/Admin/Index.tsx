@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 import Loading from '../../components/Loading'
-import { API_URL, TimeConverter, UserId } from '../../Services/client'
+import { API, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
 import Image from 'next/image'
 

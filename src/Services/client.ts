@@ -1,7 +1,12 @@
-import User from '../pages/User/Index'
+import User from '../page/User/Index'
+import axios from 'axios'
 
 export const API_URL = 'https://nightmarelight.onrender.com'
+export const base_url = 'https://nightmarelight.onrender.com'
 
+export const API = axios.create({
+  baseURL: base_url
+})
 
 export function UserId() {
   const acesstoken = JSON.parse(localStorage.getItem('@user') || 'false')
