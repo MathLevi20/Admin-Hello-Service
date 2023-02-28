@@ -2,7 +2,6 @@
 import { useEffect } from 'react'
 import { useState } from 'react'
 import Loading from '../../components/Loading'
-import Nav from '../../components/Nav'
 import { API, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
 
@@ -31,9 +30,7 @@ export const Accounts = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/profile/all')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setData(response.data)
           console.log(data)
@@ -50,7 +47,6 @@ export const Accounts = () => {
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setData(response.data)
         console.log(data)

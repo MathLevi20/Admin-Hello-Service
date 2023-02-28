@@ -1,8 +1,7 @@
-﻿import axios from 'axios'
-import { useEffect } from 'react'
+﻿import { useEffect } from 'react'
 import { useState } from 'react'
 import Loading from '../../components/Loading'
-import { API, TimeConverter, UserId } from '../../Services/client'
+import { API, API_URL, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
 import Image from 'next/image'
 
@@ -31,7 +30,7 @@ export const Admin = () => {
 
   useEffect(() => {
     try {
-      fetch(`${API_URL}/profile/all`)
+      API.get('/profile/all')
         .then(function (response: any) {
           setData(response.data)
           console.log(data)
@@ -48,7 +47,6 @@ export const Admin = () => {
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setData(response.data)
         console.log(data)

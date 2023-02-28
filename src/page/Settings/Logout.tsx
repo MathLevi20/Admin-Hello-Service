@@ -1,5 +1,4 @@
-﻿import { useState } from 'react'
-import { useAuth } from '../../contexts/auth_context'
+﻿import { useAuth } from '../../contexts/auth_context'
 
 export const Logout = () => {
   const { authData, signOut } = useAuth()

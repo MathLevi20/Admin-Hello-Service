@@ -1,13 +1,15 @@
-﻿import { useEffect, useState } from 'react'
-import { flushSync } from 'react-dom'
+﻿'use client'
+
+import { useEffect, useState } from 'react'
 import ModalService from './ModalService'
 import ModalServicePost from './ModalServicePost'
-import axios from 'axios'
 import Loading from '../../components/Loading'
-import { API } from '../../Services/client'
+import { API, getLocalStorage } from '../../Services/client'
 import Pagination from '../../components/pagination'
+import Image from 'next/image'
+import { type } from 'os'
 
-interface Services {
+interface Data_Services {
   price: number
   name: string
   userid: string
@@ -15,16 +17,21 @@ interface Services {
   id: string
 }
 
-export const Services = () => {
-  const [data, setData] = useState<Services[]>([])
+
+const Services = () => {
+  const [data, setData] = useState<Data_Services[]>([])
   const [popupVisible, setPopupVisible] = useState<boolean>(false)
   const [isLoading, setIsLoading] = useState(true)
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage, setPostsPerPage] = useState(11)
   const [search, setSearch] = useState('')
+  
 
-  const acesstoken = JSON.parse(localStorage.getItem('@user') || 'false')
-  const userid = acesstoken.user.id
+  const acesstoken = JSON.parse(getLocalStorage('@user') || 'false')
+  console.log(acesstoken)
+
+  const userid =  acesstoken  ?  acesstoken.user.id   : "Idtas"
+  console.log(userid)
 
   function togglePopup() {
     setPopupVisible(!popupVisible)
@@ -45,9 +52,7 @@ export const Services = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/service')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setIsLoading(true)
           setData(response.data)
@@ -135,7 +140,7 @@ export const Services = () => {
                     </button>
                   </button>
                   <button className="flex justify-start" onClick={() => Delete(data.id)}>
-                    <img src="/cancel.svg" width="20" />
+                    <Image alt="as" src="/cancel.svg" width="20" height="20" />
                   </button>
                 </div>
               </div>

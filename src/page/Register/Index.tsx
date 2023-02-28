@@ -1,7 +1,5 @@
-﻿import { ChangeEvent, useContext, useState } from 'react'
-import { redirect, useNavigate } from 'react-router-dom'
-import { AuthContext } from '../../contexts/Auth/AuthContext'
-import axios, { AxiosError } from 'axios'
+﻿import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/auth_context'
 
 export const Register = () => {

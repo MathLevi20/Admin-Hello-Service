@@ -21,9 +21,7 @@ export const Log = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/Logs/experimental')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setIsLoading(true)
           setData(response.data)

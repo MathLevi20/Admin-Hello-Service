@@ -1,7 +1,5 @@
 ﻿import { ReactNode, useEffect, useState } from 'react'
-import useFetch from 'react-fetch-hook'
 import Loading from '../../components/Loading'
-import Nav from '../../components/Nav'
 import { API, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
 
@@ -31,10 +29,8 @@ export const Claiming = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier, no-inner-declarations
    
       API.get('/denounce/')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setIsLoading(true)
           setData(response.data)
@@ -55,7 +51,6 @@ export const Claiming = () => {
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setData(response.data)
         console.log(data)
@@ -69,7 +64,6 @@ export const Claiming = () => {
   }
   function Solve(data: any) {
     API.patch('/denounce/markassolved', data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setData(response.data)
         console.log(data)

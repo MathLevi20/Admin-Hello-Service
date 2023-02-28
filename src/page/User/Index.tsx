@@ -1,7 +1,6 @@
 ﻿import React, { useEffect, useState } from 'react'
-import { Await, useParams } from 'react-router-dom'
+import {  useParams } from 'react-router-dom'
 import Loading from '../../components/Loading'
-import Nav from '../../components/Nav'
 import { API } from '../../Services/client'
 import Comments from './Comments'
 import Empty from './empty'
@@ -65,7 +64,6 @@ const User = () => {
   }, [])
   useEffect(() => {
     API.get('/denounce/denounced/' + Id)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
         setComplaints(response.data)
         console.log('feito')
@@ -77,7 +75,7 @@ const User = () => {
   }, [])
   useEffect(() => {
     API.get('/denounce/denouncer/' + Id)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+ 
       .then(function (response: any) {
         setReport(response.data)
         console.log('feito')

@@ -3,7 +3,6 @@
 import Nav from '@/components/navbar'
 import Dashboard from '@/page/Dashboard/Index'
 import Log from '@/page/Log/Log'
-import { Services } from '@/page/Services/Index'
 import React from 'react'
 
 export default function page() {

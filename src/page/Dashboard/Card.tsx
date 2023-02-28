@@ -1,5 +1,4 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/function-component-definition */
+
 import React, { FunctionComponent } from 'react'
 type User = {
     Title: string

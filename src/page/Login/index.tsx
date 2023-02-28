@@ -1,9 +1,9 @@
 import { ChangeEvent, useContext, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import { AuthContext } from '../../contexts/Auth/AuthContext'
-import axios, { AxiosError } from 'axios'
+import axios from 'axios'
 import { useAuth } from '../../contexts/auth_context'
 import Image from 'next/image';
+
 export const Login = () => {
   const navigate = useRouter()
   const { signIn } = useAuth()
@@ -27,6 +27,7 @@ export const Login = () => {
     try {
       await signIn({ email: username, password })
       console.log('finalizado')
+      navigate.push(`/Dashboard`)
     } catch (err) {
       console.log(err)
       setLoading(false)
@@ -65,11 +66,11 @@ export const Login = () => {
       <div className="absolute inset-0 flex items-center justify-center">
         <div className="grid grid-rows-1 bg-slate-500 p-10  rounded-md ">
           <Image
-            src=""
+            src="/logo.svg"
             className={`cursor-pointer pb-7 mx-auto p-3"`}
             width="100"
             alt="icon"
-          
+            height={50}
           />
           <input
             className="p-2 border-black-900 border"

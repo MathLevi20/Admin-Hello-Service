@@ -3,9 +3,8 @@ import { flushSync } from 'react-dom'
 import ContractPost from './PostContract'
 import Set from './PutContract'
 import Contract from './Contract'
-import { API, UserId } from '../../Services/client'
+import { API} from '../../Services/client'
 import Loading from '../../components/Loading'
-import { title } from 'process'
 import Pagination from '../../components/pagination'
 
 interface Contract {
@@ -29,9 +28,7 @@ export const Contract_list = () => {
 
   useEffect(() => {
     try {
-      // eslint-disable-next-line prettier/prettier
       API.get('/userterm/')
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         .then(function (response: any) {
           setIsLoading(true)
           setData(response.data)

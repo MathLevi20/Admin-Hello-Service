@@ -1,5 +1,3 @@
-/* eslint-disable prettier/prettier */
-/* eslint-disable react/function-component-definition */
 import axios from 'axios';
 import React, { useState ,useEffect} from 'react'
 import Loading from '../../components/Loading';

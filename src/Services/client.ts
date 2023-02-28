@@ -1,4 +1,4 @@
-import User from '../page/User/Index'
+'use client'
 import axios from 'axios'
 
 export const API_URL = 'https://nightmarelight.onrender.com'
@@ -33,3 +33,11 @@ export function TimeConverter(days: number) {
 }
 
 export const timestamp = Date.now()
+
+export const getLocalStorage = (key:string) => {
+  if (typeof window !== "undefined") {
+    const item = localStorage.getItem(key);
+    return item 
+  }
+  return null;
+};

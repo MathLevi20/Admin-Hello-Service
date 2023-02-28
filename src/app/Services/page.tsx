@@ -1,8 +1,7 @@
 'use client'
 
 import Nav from '@/components/navbar'
-import Dashboard from '@/page/Dashboard/Index'
-import { Services } from '@/page/Services/Index'
+import Services from '@/page/Service/Index'
 import React from 'react'
 
 export default function page() {
