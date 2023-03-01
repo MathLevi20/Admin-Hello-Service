@@ -1,4 +1,5 @@
-﻿import React, { useEffect, useState } from 'react'
+﻿import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import {  useParams } from 'react-router-dom'
 import Loading from '../../components/Loading'
 import { API } from '../../Services/client'
@@ -38,15 +39,20 @@ function timeConverter(UNIX_timestamp: any) {
 
   return time
 }
-const User = () => {
+
+interface props {
+  id:any;
+}
+const User = (props:props) => {
   const [data, setData] = useState<User[]>([])
   const [complaints, setComplaints] = useState<User[]>([])
   const [report, setReport] = useState<User[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
-  const params = useParams()
-  const Id = params.userId
+  const params = useRouter();
+  console.log(params)
 
+  const Id = props.id
   useEffect(() => {
     try {
       API.get('/profile/'+ Id)
