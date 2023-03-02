@@ -35,7 +35,7 @@ export const Log = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
 
   const downloadFile = ({
     data,

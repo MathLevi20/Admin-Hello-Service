@@ -66,7 +66,7 @@ const Services = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
   const lastPostIndex = currentPage * postsPerPage
   const firstPostIndex = lastPostIndex - postsPerPage
   const currentPosts = data.slice(firstPostIndex, lastPostIndex)

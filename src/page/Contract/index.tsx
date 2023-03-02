@@ -6,6 +6,7 @@ import Contract from './Contract'
 import { API} from '../../Services/client'
 import Loading from '../../components/Loading'
 import Pagination from '../../components/pagination'
+import Image from 'next/image'
 
 interface Contract {
   id: string
@@ -42,7 +43,7 @@ export const Contract_list = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
   console.log(typeof data)
 
   async function Delete(id: string) {
@@ -126,7 +127,7 @@ export const Contract_list = () => {
                           <Set descricao={data.content} title={data.name} id={data.id} />
                         </button>
                         <button className="flex justify-start" onClick={() => Delete(data.id)}>
-                          <img src="/cancel.svg" width="20" />
+                          <Image src="/cancel.svg" alt="Cancel" width={20} height={20} />
                         </button>
                       </div>
                     </div>

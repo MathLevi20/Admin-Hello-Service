@@ -39,7 +39,7 @@ useEffect(() => {
     catch(error:any) {
       console.log("Feito");
   } // complete loading success/fail
-}, []);
+}, [data]);
 
 return (   
    <div className="flex-1 p-6 font-bold    ">

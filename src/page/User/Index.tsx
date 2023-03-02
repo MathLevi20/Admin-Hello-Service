@@ -5,7 +5,7 @@ import Loading from '../../components/Loading'
 import { API } from '../../Services/client'
 import Comments from './Comments'
 import Empty from './empty'
-
+import Image from 'next/image';
 interface User {
   [x: string]: any
   id: string
@@ -67,7 +67,7 @@ const User = (props:props) => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [Id, data])
   useEffect(() => {
     API.get('/denounce/denounced/' + Id)
       .then(function (response: any) {
@@ -78,7 +78,7 @@ const User = (props:props) => {
         console.log(error)
       })
       .finally(() => setIsLoading(false))
-  }, [])
+  }, [Id])
   useEffect(() => {
     API.get('/denounce/denouncer/' + Id)
  
@@ -89,7 +89,7 @@ const User = (props:props) => {
       .catch((error: any) => {
         console.log(error)
       })
-  }, [])
+  }, [Id])
 
   return (
     <div className="  h-screen overflow-y-auto w-full">
@@ -104,7 +104,7 @@ const User = (props:props) => {
                   <div>
                     <div className="flex border-inherit rounded-lg w-fit mx-auto py-2  px-3">
                       <div className="object-center my-auto mx-3">
-                        <img
+                        <Image
                           className="mx-auto rounded-full"
                           src={
                             data.avatar == 'linkaqui'
@@ -112,6 +112,8 @@ const User = (props:props) => {
                               : data.avatar
                           }
                           width="50"
+                          height="50"
+                          alt="Avatar"
                         />
                       </div>
 

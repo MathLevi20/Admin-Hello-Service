@@ -44,7 +44,7 @@ export const Claiming = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
   const lastPostIndex = currentPage * postsPerPage
   const firstPostIndex = lastPostIndex - postsPerPage
   const currentPosts = Array.isArray(data) ? data.slice(firstPostIndex, lastPostIndex) : [data]
@@ -122,7 +122,7 @@ export const Claiming = () => {
                       {data.solved == false ? 'Não lida ' : 'Lida'}
                     </button>
                   </div>
-                  <div className=" border-gray-700   hover:bg-slate-900  hover:bg-gray-800 mx-auto w-full m-auto ">
+                  <div className=" border-gray-700     hover:bg-gray-800 mx-auto w-full m-auto ">
                     <details className="  py-3.5 px-8 relative cursor-pointer bg-gray-900     hover:bg-gray-800 w-full  open:ring-1 open:ring-black/5 open:shadow-lg   transform-gpu delay-75 duration-100 ease-in-out ">
                       <summary className="  text-white dark:text-white font-semibold select-none">
                         Ban

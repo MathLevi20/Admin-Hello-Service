@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Loading from '../../components/Loading'
 import { API, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
+import Image from 'next/image'
 
 interface User {
   banided: boolean
@@ -43,7 +44,7 @@ export const Accounts = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
@@ -126,14 +127,16 @@ export const Accounts = () => {
                 key={data.id}
               >
                 <div className="grid grid-cols-1 grid-flow-cols min-[850px]:grid-cols-5 gap-1">
-                  <img
+                  <Image
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'
                         ? 'https://img.icons8.com/ios/512/test-account.png'
                         : data.avatar
                     }
-                    width="40"
+                    alt="Avatar"
+                    width={40}
+                    height={40}
                   />
                   <div className="mx-auto">{data.username}</div>
 

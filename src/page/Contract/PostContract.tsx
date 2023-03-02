@@ -43,7 +43,7 @@ export const ContractPost = ({
   return (
     <>
       <button
-        className="bg-slate-800 text-[15px] hover:bg-slate-900   
+        className="bg-slate-800 text-[15px]   
                       text-white font-bold                      block
                       px-6
                       py-5

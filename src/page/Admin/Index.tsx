@@ -43,7 +43,7 @@ export const Admin = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
@@ -130,11 +130,11 @@ export const Admin = () => {
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'
-                        ? 'https://Image.icons8.com/ios/512/test-account.png'
+                        ? 'https://img.icons8.com/ios/512/test-account.png'
                         : data.avatar
                     }
-                    width="40"
-                    height="40"
+                    width={40}
+                    height={40}
                     alt="Profile Pic"
                   />
                   <div className="mx-auto">{data.username}</div>

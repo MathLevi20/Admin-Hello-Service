@@ -40,7 +40,7 @@ export const Blacklist = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [])
+  }, [data])
 
   const updateNote = async (id: any, data: any, is_banided_perm: any, is_banided_temp: any) => {
     await fetch(`http://localhost:3000/Usuarios/${id}`, {
@@ -144,9 +144,9 @@ export const Blacklist = () => {
                         ? 'https://img.icons8.com/ios/512/test-account.png'
                         : data.avatar
                     }
-                    width="40"
+                    width={50}
                     height={50}
-                    alt="as"
+                    alt="Avatar"
                   />
                   <div className="mx-auto">{data.username}</div>
                   <button
