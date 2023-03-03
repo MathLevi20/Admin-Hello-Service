@@ -1,6 +1,6 @@
 'use client'
-
 import { AxiosError } from 'axios'
+import { useRouter } from 'next/navigation'
 import {
   createContext,
   ReactNode,
@@ -13,7 +13,7 @@ import {
 import { decodeToken } from 'react-jwt'
 import { useNavigate } from 'react-router-dom'
 import { API } from '../Services/client'
-import { useRouter } from 'next/navigation'
+
 interface IUser {
   id: string
   username: string
@@ -40,7 +40,7 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext)
 
 export const AuthContextProvider = ({ children }: IAuthContextProviderProps) => {
   const [authData, setAuthData] = useState<IAuthData | null | undefined>(undefined)
-  const navigate = useRouter ()
+  const navigate = useRouter()
 
   const _saveInStorage = (data: IAuthData) => {
     const authDataformattedInString = JSON.stringify(data)
@@ -83,6 +83,8 @@ export const AuthContextProvider = ({ children }: IAuthContextProviderProps) => 
 
         _saveInStorage(authDataFormatter)
         setAuthData(authDataFormatter)
+        navigate.push('/Services')
+
       } else {
         setAuthData(null)
       }
@@ -91,6 +93,10 @@ export const AuthContextProvider = ({ children }: IAuthContextProviderProps) => 
       console.log(err)
     }
   }, [])
+
+
+
+  
   const signOut = useCallback(() => {
     setAuthData(null)
     _removeInStorage()

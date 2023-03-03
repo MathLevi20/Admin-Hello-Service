@@ -2,8 +2,9 @@
 
 import { ChangeEvent, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useAuth } from '../../contexts/auth_context'
+import { useAuth } from '../../contexts/authContext'
 import Image from 'next/image'
+import Loading from '@/components/Loading_small'
 
 export const Register = () => {
   const { signIn } = useAuth()
@@ -35,38 +36,41 @@ export const Register = () => {
 
   return (
     <div>
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="grid grid-rows-1 bg-slate-500 p-10  rounded-md ">
+      <div className="absolute inset-0 flex items-center  justify-center
+      bg-gradient-to-tr from-sky-300 to-sky-500 ">        
+        <div className="grid grid-rows-1 gap-1 bg-slate-500 p-10  rounded-md ">
           <Image
             src="/logo.svg"
-            className={`cursor-pointer pb-7 mx-auto p-3"`}
+            className={`cursor-pointer  mx-auto p-3"`}
             width={100}
             height={100}
             alt="logo"
           />
+          <h4 className='text-center p-3 text-slate-800 font-semibold  font-mono text-xl '>Register</h4>
+
           <input
-            className="p-2 border-black-900 border"
+            className="p-2 border-black-900 bg-white border-cyan-600 hover:border-cyan-900 border"
             type="text"
             value={username}
             onChange={handleEmailInput}
-            placeholder="Digite seu e-mail"
+            placeholder="Digite seu usuario"
           />
           <input
-            className="p-2 mt-2 border-black-900 border"
+            className="p-2 border-black-900 bg-white border-cyan-600 hover:border-cyan-900 border"
             type="password"
             value={password}
             onChange={handlePasswordInput}
             placeholder="Digite sua senha"
           />
           <input
-            className="p-2 mt-2 border-black-900 border"
+            className="p-2 border-black-900 bg-white border-cyan-600 hover:border-cyan-900 border"
             type="password"
             value={password}
             onChange={handlePasswordInput}
-            placeholder="Digite sua senha"
+            placeholder="Digite novamente senha"
           />
-          <button className="mt-2 p-2 rounded-md bg-slate-600" onClick={handleSignIn}>
-            {loading ? '...' : 'Register'}
+          <button className="p-2 mt-4 rounded-md bg-slate-600 mx-12" onClick={handleSignIn}>
+          {loading ? <Loading/> :<h6 className=' font-semibold  font-mono text-md text-white hover:text-slate-200 '>Entre</h6> }
           </button>
         </div>
       </div>

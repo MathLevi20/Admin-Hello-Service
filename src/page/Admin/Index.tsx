@@ -126,7 +126,7 @@ export const Admin = () => {
                 key={data.id}
               >
                 <div className="grid grid-cols-1 grid-flow-cols min-[850px]:grid-cols-5 gap-1">
-                  <Image
+                  <img
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'

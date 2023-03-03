@@ -74,7 +74,7 @@ export const Accounts = () => {
   console.log(data)
 
   return (
-    <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
+    <div className="flex-1 p-6 font-bold h-full overflow-y-auto">
       <div className={`py-2 mb-4 text-2xl font-semibold flex-1 `}>
         <h2>Accounts</h2>
         <div className="mt-3 w-full flex justify-center pt-0">
@@ -127,11 +127,11 @@ export const Accounts = () => {
                 key={data.id}
               >
                 <div className="grid grid-cols-1 grid-flow-cols min-[850px]:grid-cols-5 gap-1">
-                  <Image
+                  <img
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'
-                        ? 'https://img.icons8.com/ios/512/test-account.png'
+                        ? ''
                         : data.avatar
                     }
                     alt="Avatar"

@@ -1,7 +1,7 @@
 'use client'
 
 import Nav from '@/components/navbar'
-import { AuthContextProvider } from '@/contexts/auth_context'
+import { AuthContextProvider } from '@/contexts/authContext'
 import Admin from '@/page/Admin/Index'
 import React from 'react'
 
