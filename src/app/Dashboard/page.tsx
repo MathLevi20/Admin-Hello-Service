@@ -1,6 +1,6 @@
 'use client'
 
-import Nav from '@/components/navbar'
+import Nav from '@/components/navbar/index'
 import Dashboard from '@/page/Dashboard/Index'
 import React from 'react'
 
