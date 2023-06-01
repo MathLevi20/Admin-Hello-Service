@@ -33,7 +33,7 @@ export const Accounts = () => {
     try {
       API.get('/profile/all')
         .then(function (response: any) {
-          setData(response.data)
+          setData((response.data).filter((data:any) => data.banided == false))
           console.log(data)
           console.log('feito')
         })
@@ -44,12 +44,12 @@ export const Accounts = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [data])
+  }, [])
 
   function Ban(data: any, typeban: string) {
     API.post('/sanction/' + typeban, data)
       .then(function (response: any) {
-        setData(response.data)
+        setData(response.data  )
         console.log(data)
         console.log('feito')
       })
@@ -103,7 +103,7 @@ export const Accounts = () => {
           changedata(data)
             .filter((data: any) => {
               console.log(data.username)
-              if (search == '' && data.banided == false) {
+              if (search == '' ) {
                 return data
               } else if (
                 data.username.toLowerCase().includes(search.toLowerCase()) &&

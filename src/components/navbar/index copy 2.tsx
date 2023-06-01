@@ -1,21 +1,73 @@
-import { useState } from "react";
-import { MdMenu } from "react-icons/md";
+'use client'
+import { useEffect, useState } from "react";
+import { useRef } from "react";
 import { motion } from "framer-motion";
-import { BsArrow90DegDown, BsFillArrowLeftCircleFill, BsPerson } from "react-icons/bs";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { HiOutlineDatabase } from "react-icons/hi";
+
+import { IoIosArrowBack } from "react-icons/io";
 import { SlSettings } from "react-icons/sl";
-import Link from "next/link";
+import { AiOutlineAppstore } from "react-icons/ai";
+import { BsPerson } from "react-icons/bs";
+import { HiOutlineDatabase } from "react-icons/hi";
+import { TbReportAnalytics } from "react-icons/tb";
+import { RiBuilding3Line } from "react-icons/ri";
+import { MdMenu } from "react-icons/md";
+
 import Image from 'next/image'
-import { useMediaQuery } from "react-responsive";
+import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(true);
-  let isTabletMid = useMediaQuery({ query: "(max-width: 767px)" });
+export const Nav = () => {
+  const [open, setOpen] = useState(true)
 
-  const toggleSidebar = () => {
-    setOpen(!open);
-  };
+  let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
+  const [open1, setOpen1] = useState(isTabletMid ? false : true);
+
+  useEffect(() => {
+    if (isTabletMid) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }, [isTabletMid]);
+
+  useEffect(() => {
+    isTabletMid && setOpen(false);
+  }, []);
+
+  const Nav_animation = isTabletMid
+    ? {
+        open: {
+          x: 0,
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
+        },
+        closed: {
+          x: -250,
+          width: 0,
+          transition: {
+            damping: 40,
+            delay: 0.15,
+          },
+        },
+      }
+    : {
+        open: {
+          width: "16rem",
+          transition: {
+            damping: 40,
+          },
+        },
+        closed: {
+          width: "4rem",
+          transition: {
+            damping: 40,
+          },
+        },
+      };
+
+
   const Menus = [
     {
       title: 'Dashboard',
@@ -68,19 +120,11 @@ const Sidebar = () => {
   ]
 
   return (
-    <div>
+    <div className="flex ">
       <div
-        className={`fixed inset-0 bg-black/50 ${
-          open ? "block" : "hidden"
-        } md:hidden`}
-        onClick={toggleSidebar}
-      ></div>
-
-      <div
-        className={`fixed h-full bg-yellow-300 p-10 transition-transform duration-400 transform ${
-          open ? "translate-x-0 w-60" : "w-10 md:w-20 -translate-x-full "
-        } ${isTabletMid && !open ? 'hidden' : ''}  md:translate-x-0 md:static  md:p-4 relative `}
-
+        className={`${
+          open ? 'w-72' : 'w-10 sm:w-20 '
+        } p-5 pt-5 duration-400 h-full bg-yellow-300 relative `}
       >
         <Image
         alt="control"
@@ -91,24 +135,24 @@ const Sidebar = () => {
        height={50}
         onClick={() => setOpen(!open)}
         />
-         <div className="flex gap-x-4 items-center">
+        <div>
+          <div className="flex gap-x-4 items-center">
             <Image
             alt="logo"
               src="/logo.svg"
-              className={`cursor-pointer  duration-300 ${open && 'rotate-[360deg]'}`}
+              className={`cursor-pointer  duration-200 ${open && 'rotate-[360deg]'}`}
               width={50}
               height={50}
             />
             <h1
-              className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
+              className={`text-gray-800 font-medium origin-left text-xl duration-300 ${
                 !open && 'scale-0'
               }`}
             >
               Hello Service
             </h1>
           </div>
-
-          <ul className="pt-2">
+          <ul className="pt-6">
             {Menus.map((menu) => (
               <div key={menu.title}>
                 <Link href={menu.path}>
@@ -126,39 +170,13 @@ const Sidebar = () => {
               </div>
             ))}
           </ul>
-
-        <motion.div
-          onClick={toggleSidebar}
-          animate={
-            open
-              ? {
-                   x: -10,
-                  y: -200,
-                  rotate: 0,
-                }
-              : {
-                  x: -10,
-                  y: -200,
-                  rotate: 180,
-                }
-          }
-          transition={{ duration: 0 }}
-          className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
-        >
-        </motion.div>
+        </div>
       </div>
-
-      <div
-        className="p-1 ml-2 my-6 md:hidden cursor-pointer"
-        onClick={toggleSidebar}
-      >
-               <MdMenu className={`cursor-pointer  rounded-full 
-       left-3 top-9 w-7 border-yellow-300 ${!open ? " ": 'hidden'} `} size={40} onClick={() => toggleSidebar}/>
-
+            <div className="m-3 md:hidden  " onClick={() => setOpen(true)}>
+        <MdMenu size={10} />
       </div>
- 
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Nav

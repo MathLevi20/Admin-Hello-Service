@@ -1,6 +1,5 @@
 ﻿import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
-import {  useParams } from 'react-router-dom'
 import Loading from '../../components/Loading'
 import { API } from '../../Services/client'
 import Comments from './Comments'

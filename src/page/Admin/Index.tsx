@@ -1,9 +1,10 @@
-﻿import { useEffect } from 'react'
+﻿/* eslint-disable react/jsx-no-comment-textnodes */
+import { useContext, useEffect } from 'react'
 import { useState } from 'react'
 import Loading from '../../components/Loading'
 import { API, API_URL, TimeConverter, UserId } from '../../Services/client'
 import Pagination from '../../components/pagination'
-import Image from 'next/image'
+import { useAuth } from '@/contexts/authContext'
 
 interface User {
   banided: boolean
@@ -23,6 +24,8 @@ export const Admin = () => {
   const [search, setSearch] = useState('')
   const [currentPage, setCurrentPage] = useState(1)
   const [postsPerPage, setPostsPerPage] = useState(5)
+  const { authData } = useAuth();
+  const refreshToken = authData?.refreshToken;
 
   function handlerdata() {
     return TimeConverter(7)
@@ -30,9 +33,10 @@ export const Admin = () => {
 
   useEffect(() => {
     try {
-      API.get('/profile/all')
+      API.get('/auth/list', )
         .then(function (response: any) {
           setData(response.data)
+          console.log(response.data)
           console.log(data)
           console.log('feito')
         })
@@ -73,8 +77,8 @@ export const Admin = () => {
   console.log(data)
 
   return (
-    <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
-      <div className={`py-2 mb-4 text-2xl font-semibold flex-1 `}>
+    <div className="flex-1 md:p-6 py-6 font-bold h-screen overflow-y-auto">
+      <div className={`py-2 mb-4 text-2xl font-semibold text-center md:text-left flex-1 `}>
         <h2>Administrator</h2>
         <div className="mt-3 w-full flex justify-center pt-0">
           <input
@@ -102,11 +106,10 @@ export const Admin = () => {
           changedata(data)
             .filter((data: any) => {
               console.log(data.username)
-              if (search == '' && data.banided == false) {
+              if (search == '' ) {
                 return data
               } else if (
-                data.username.toLowerCase().includes(search.toLowerCase()) &&
-                data.banided == false
+                data.username.toLowerCase().includes(search.toLowerCase()) 
               ) {
                 return data
               }
@@ -130,8 +133,8 @@ export const Admin = () => {
                     className="mx-auto rounded-full"
                     src={
                       data.avatar == 'linkaqui'
-                        ? 'https://img.icons8.com/ios/512/test-account.png'
-                        : data.avatar
+                        ? 
+                       data.avatar:'https://img.icons8.com/ios/512/test-account.png'
                     }
                     width={40}
                     height={40}
@@ -139,12 +142,7 @@ export const Admin = () => {
                   />
                   <div className="mx-auto">{data.username}</div>
 
-                  <button
-                    className="bg-green-500 hover:bg-green-700 text-sm text-white font-bold py-1   px-2 rounded "
-                    onClick={(event) => (window.location.href = '/User/' + data.id)}
-                  >
-                    Ver Perfil
-                  </button>
+
                   <button
                     className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2  px-2 rounded"
                     onClick={() => Ban({ userid: UserId(), userban: data.id }, 'permanent')}

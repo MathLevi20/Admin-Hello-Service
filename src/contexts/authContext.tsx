@@ -11,7 +11,6 @@ import {
   useState
 } from 'react'
 import { decodeToken } from 'react-jwt'
-import { useNavigate } from 'react-router-dom'
 import { API } from '../Services/client'
 
 interface IUser {
@@ -21,7 +20,8 @@ interface IUser {
 }
 interface IAuthData {
   user: IUser
-  token: string
+  acessToken: string
+  refreshToken: string
 }
 interface IAuthParams {
   email: string
@@ -66,24 +66,27 @@ export const AuthContextProvider = ({ children }: IAuthContextProviderProps) => 
       setAuthData(null)
     }
   }, [])
+
   const signIn = useCallback(async ({ email, password }: IAuthParams) => {
     try {
       const response = await API.post('/auth/signin', { username: email, password })
       const data = response.data
 
       if (data.signin) {
-        const token = data.acetoken
+        const acessToken = data.acetoken
+        const refreshToken = data.reftoken
 
-        const decodeData = _decodedToken(token) as IUser
+        const decodeDataAcess = _decodedToken(acessToken) as IUser
+        const decodeDataRefress = _decodedToken(refreshToken) as IUser
 
         const authDataFormatter: IAuthData = {
-          token: token,
-          user: decodeData
+          refreshToken: refreshToken ,
+          acessToken:  acessToken,
+          user: decodeDataAcess
         }
 
         _saveInStorage(authDataFormatter)
         setAuthData(authDataFormatter)
-        navigate.push('/Services')
 
       } else {
         setAuthData(null)

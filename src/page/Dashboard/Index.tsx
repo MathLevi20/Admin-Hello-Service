@@ -11,14 +11,14 @@ interface Dashboard {
 
 function Dashboard() {
   type Dashboard = {
-    online:number,
-    offline: number,
-    total: number
+    online:any,
+    offline: any,
+    total: any
   }
 const [data, setData] = useState<Dashboard>({
-	online: 0,
-	offline:0 ,
-	total: 0
+	online: Number,
+	offline:Number ,
+	total: Number
 })
 
 const [isLoading, setIsLoading] = useState(false)
@@ -39,10 +39,10 @@ useEffect(() => {
     catch(error:any) {
       console.log("Feito");
   } // complete loading success/fail
-}, [data]);
+}, []);
 
 return (   
-   <div className="flex-1 p-6 font-bold    ">
+   <div className="flex-1 p-1 md:p-6 font-bold h-screen overflow-y-auto    ">
       <div className={`py-2 mb-4 text-2xl   h-full font-semibold `}>
         <h2>Dashboard</h2>
     {isLoading ? <div className='flex  h-4/5   pl-2 '>

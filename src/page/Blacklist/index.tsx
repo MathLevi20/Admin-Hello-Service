@@ -40,7 +40,7 @@ export const Blacklist = () => {
     } catch (error: any) {
       console.log('Error')
     } // complete loading success/fail
-  }, [data])
+  }, [])
 
   const updateNote = async (id: any, data: any, is_banided_perm: any, is_banided_temp: any) => {
     await fetch(`http://localhost:3000/Usuarios/${id}`, {
@@ -98,7 +98,7 @@ export const Blacklist = () => {
       </div>
       <div
         className="  
-                py-3    grid grid-cols-7"
+                py-3    grid grid-cols-4"
       >
         <div className="border-x px-6  py-2">Id</div>
         <div className="border-x px-4 py-2 ">Nome</div>
@@ -136,7 +136,7 @@ export const Blacklist = () => {
                     "
                 key={data.id}
               >
-                <div className="grid grid-cols-7 gap-2 ease-in transition-opacity-80 ">
+                <div className="grid grid-cols-4 gap-2 ease-in transition-opacity-80 ">
                   <Image
                     className="mx-auto rounded-full"
                     src={

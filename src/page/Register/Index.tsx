@@ -1,7 +1,6 @@
 ﻿'use client'
 
 import { ChangeEvent, useState } from 'react'
-import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../../contexts/authContext'
 import Image from 'next/image'
 import Loading from '@/components/Loading_small'
@@ -38,7 +37,7 @@ export const Register = () => {
     <div>
       <div className="absolute inset-0 flex items-center  justify-center
       bg-gradient-to-tr from-sky-300 to-sky-500 ">        
-        <div className="grid grid-rows-1 gap-1 bg-slate-500 p-10  rounded-md ">
+        <div className="grid grid-rows-1 gap-1 bg-white p-10  rounded-md ">
           <Image
             src="/logo.svg"
             className={`cursor-pointer  mx-auto p-3"`}
@@ -70,7 +69,7 @@ export const Register = () => {
             placeholder="Digite novamente senha"
           />
           <button className="p-2 mt-4 rounded-md bg-slate-600 mx-12" onClick={handleSignIn}>
-          {loading ? <Loading/> :<h6 className=' font-semibold  font-mono text-md text-white hover:text-slate-200 '>Entre</h6> }
+          {loading ? <Loading/> :<h6 className='px-2 font-semibold  font-mono text-md text-white hover:text-slate-200 '>Enviar Solicitação</h6> }
           </button>
         </div>
       </div>

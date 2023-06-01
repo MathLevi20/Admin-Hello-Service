@@ -1,21 +1,14 @@
-import { useState } from "react";
-import { MdMenu } from "react-icons/md";
-import { motion } from "framer-motion";
-import { BsArrow90DegDown, BsFillArrowLeftCircleFill, BsPerson } from "react-icons/bs";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { SlSettings } from "react-icons/sl";
-import Link from "next/link";
+'use client'
+
+import { useState } from 'react'
 import Image from 'next/image'
-import { useMediaQuery } from "react-responsive";
+import Link from 'next/link'
+import { useMediaQuery } from 'react-responsive'
 
-const Sidebar = () => {
-  const [open, setOpen] = useState(true);
-  let isTabletMid = useMediaQuery({ query: "(max-width: 767px)" });
+export const Nav = () => {
+  const [open, setOpen] = useState(true)
+  let isTabletMid = useMediaQuery({ query: "(max-width: 768px)" });
 
-  const toggleSidebar = () => {
-    setOpen(!open);
-  };
   const Menus = [
     {
       title: 'Dashboard',
@@ -68,19 +61,11 @@ const Sidebar = () => {
   ]
 
   return (
-    <div>
+    <div className="relative  ">
       <div
-        className={`fixed inset-0 bg-black/50 ${
-          open ? "block" : "hidden"
-        } md:hidden`}
-        onClick={toggleSidebar}
-      ></div>
-
-      <div
-        className={`fixed h-full bg-yellow-300 p-10 transition-transform duration-400 transform ${
-          open ? "translate-x-0 w-60" : "w-10 md:w-20 -translate-x-full "
-        } ${isTabletMid && !open ? 'hidden' : ''}  md:translate-x-0 md:static  md:p-4 relative `}
-
+        className={`${
+          open ? 'w-55' : 'w-10 sm:w-20 '
+        } p-5 pt-5 duration-300 h-full bg-yellow-300 relative `}
       >
         <Image
         alt="control"
@@ -91,7 +76,8 @@ const Sidebar = () => {
        height={50}
         onClick={() => setOpen(!open)}
         />
-         <div className="flex gap-x-4 items-center">
+        <div>
+          <div className="flex gap-x-4 items-center">
             <Image
             alt="logo"
               src="/logo.svg"
@@ -100,15 +86,14 @@ const Sidebar = () => {
               height={50}
             />
             <h1
-              className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
+              className={`text-gray-800 font-medium origin-left text-xl duration-300 ${
                 !open && 'scale-0'
               }`}
             >
               Hello Service
             </h1>
           </div>
-
-          <ul className="pt-2">
+          <ul className="pt-6">
             {Menus.map((menu) => (
               <div key={menu.title}>
                 <Link href={menu.path}>
@@ -126,39 +111,10 @@ const Sidebar = () => {
               </div>
             ))}
           </ul>
-
-        <motion.div
-          onClick={toggleSidebar}
-          animate={
-            open
-              ? {
-                   x: -10,
-                  y: -200,
-                  rotate: 0,
-                }
-              : {
-                  x: -10,
-                  y: -200,
-                  rotate: 180,
-                }
-          }
-          transition={{ duration: 0 }}
-          className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
-        >
-        </motion.div>
+        </div>
       </div>
-
-      <div
-        className="p-1 ml-2 my-6 md:hidden cursor-pointer"
-        onClick={toggleSidebar}
-      >
-               <MdMenu className={`cursor-pointer  rounded-full 
-       left-3 top-9 w-7 border-yellow-300 ${!open ? " ": 'hidden'} `} size={40} onClick={() => toggleSidebar}/>
-
-      </div>
- 
     </div>
-  );
-};
+  )
+}
 
-export default Sidebar;
+export default Nav
