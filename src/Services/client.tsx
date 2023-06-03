@@ -4,11 +4,11 @@ export const API_URL = 'https://nightmarelight-re2.onrender.com';
 export const base_url = 'https://nightmarelight-re2.onrender.com';
 
 
-interface AccessToken {
-  accessToken: string;
+interface AcessToken {
+  acessToken: string;
 }
 
-let acesstoken: AccessToken | null = null;
+let acesstoken: AcessToken | null = null;
 function getUserId(): any {
 try {
   if (typeof window !== 'undefined') {
@@ -26,16 +26,17 @@ try {
 }
 }
 
-export const User1:any = getUserId();
+export const User1: AcessToken | null = getUserId();
+
 
 console.log('User1:', User1);
 
-export const API = axios.create({
-  baseURL: base_url,
-  headers: {
-    'Authorization': `Bearer ${User1.acessToken}`,
-  },
-});
+  export const API = axios.create({
+    baseURL: base_url,
+    headers: {
+      'Authorization': `Bearer ${User1!.acessToken}`,
+    },
+  });
 
 export function TimeConverter(days: number): string {
   const timestamp = Date.now();
