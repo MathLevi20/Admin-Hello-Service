@@ -5,7 +5,6 @@ import axios from 'axios'
 
 export const API_URL = 'https://nightmarelight-re2.onrender.com'
 export const base_url = 'https://nightmarelight-re2.onrender.com'
-export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1ZDI4ZTY0LTMwZDItNGNmMC1iNjQ5LTZhOGM1NTRhYzljMCIsInVzZXJuYW1lIjoibGV2aTAiLCJ0eXBlIjoiYWRtaW4iLCJ0b2tlbiI6ImFjZXRva2VuIiwiaWF0IjoxNjg1NTgzMDYxLCJleHAiOjE2ODU2MjYyNjF9.2UhAgajXw7Hqg-VqgeYsv8BpnjQpi_AtFt02zSOz0l8'
 
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
@@ -17,9 +16,20 @@ export function UserId() {
 
   return UserId
 }
+interface AccessToken {
+  accessToken: string;
+  // Outras propriedades do objeto, se houver
+}
 
-const acesstoken = JSON.parse(localStorage.getItem('@user') || '{}');
-export const User1 = acesstoken.acessToken  ;
+let acesstoken: AccessToken = { accessToken: '' };
+
+if (typeof window !== 'undefined') {
+    const storedToken = localStorage.getItem('@user');
+
+  acesstoken = storedToken ? JSON.parse(storedToken) : { accessToken: '' };
+}
+
+export const User1 = acesstoken.accessToken || '';
 
 console.log(acesstoken);
 console.log(User1);
