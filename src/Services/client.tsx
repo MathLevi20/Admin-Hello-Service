@@ -34,7 +34,7 @@ console.log('User1:', User1);
   export const API = axios.create({
     baseURL: base_url,
     headers: {
-      'Authorization': `Bearer ${User1!.acessToken}`,
+      'Authorization': User1 ? `Bearer ${User1!.acessToken}` : '',
     },
   });
 
