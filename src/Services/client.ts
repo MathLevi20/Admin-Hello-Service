@@ -3,8 +3,8 @@ import { useAuth } from '@/contexts/authContext'
 import axios from 'axios'
 // eslint-disable-next-line react-hooks/rules-of-hooks
 
-export const API_URL = 'https://nightmarelight-re.onrender.com'
-export const base_url = 'https://nightmarelight-re.onrender.com'
+export const API_URL = 'https://nightmarelight-re2.onrender.com'
+export const base_url = 'https://nightmarelight-re2.onrender.com'
 export const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI1ZDI4ZTY0LTMwZDItNGNmMC1iNjQ5LTZhOGM1NTRhYzljMCIsInVzZXJuYW1lIjoibGV2aTAiLCJ0eXBlIjoiYWRtaW4iLCJ0b2tlbiI6ImFjZXRva2VuIiwiaWF0IjoxNjg1NTgzMDYxLCJleHAiOjE2ODU2MjYyNjF9.2UhAgajXw7Hqg-VqgeYsv8BpnjQpi_AtFt02zSOz0l8'
 
 // eslint-disable-next-line react-hooks/rules-of-hooks

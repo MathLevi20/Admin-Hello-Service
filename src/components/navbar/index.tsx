@@ -68,7 +68,7 @@ const Sidebar = () => {
   ]
 
   return (
-    <div>
+    <div className="">
       <div
         className={`fixed inset-0 bg-black/50 ${
           open ? "block" : "hidden"
@@ -77,7 +77,7 @@ const Sidebar = () => {
       ></div>
 
       <div
-        className={`fixed h-full bg-yellow-300 p-10 transition-transform duration-400 transform ${
+        className={`fixed bg-yellow-300 h-100 p-10 transition-transform  min-h-screen duration-400 overflow-y-visible transform ${
           open ? "translate-x-0 w-60" : "w-10 md:w-20 -translate-x-full "
         } ${isTabletMid && !open ? 'hidden' : ''}  md:translate-x-0 md:static  md:p-4 relative `}
 

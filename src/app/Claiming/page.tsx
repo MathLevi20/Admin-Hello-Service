@@ -6,7 +6,7 @@ import React from 'react'
 
 export default function page() {
   return (
-    <div className='flex'>
+    <div className='flex  overflow-y-visible '>
     <Nav/>
     <Claiming/>
     </div>
