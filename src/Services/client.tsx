@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import axios from 'axios';
 
 export const API_URL = 'https://nightmarelight-re2.onrender.com';
@@ -58,13 +57,7 @@ export const timestamp = Date.now();
 
 
 // Exemplo de uso em um componente
-const MyComponent = () => {
-  useEffect(() => {
-    console.log('User1:', User1);
-  }, []);
 
-  return <div>Componente</div>;
-};
 export function UserId() {
   const acesstoken = JSON.parse(localStorage.getItem('@user') || 'false')
   const UserId = String(acesstoken.user.id)
@@ -73,4 +66,10 @@ export function UserId() {
 
   return UserId
 }
-export default MyComponent;
+export const getLocalStorage = (key:string) => {
+  if (typeof window !== "undefined") {
+    const item = localStorage.getItem(key);
+    return item 
+  }
+  return null;
+};
