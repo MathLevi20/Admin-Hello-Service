@@ -1,15 +1,17 @@
-﻿'use client'
+﻿"use client";
 
-import Nav from '@/components/navbar/index'
-import Accounts from '@/page/Accounts/Accounts'
-import React from 'react'
+import Nav from "@/components/navbar/index";
+import withAuth from "@/contexts/Acesscontrol";
+import Accounts from "@/page/Accounts/Accounts";
+import React from "react";
+
+const ProtectedAccounts = withAuth(Accounts, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
 
 export default function page() {
   return (
-    <div className='flex'>
-    <Nav/>
-    <Accounts/>
+    <div className="flex">
+      <Nav />
+      <ProtectedAccounts />
     </div>
-  )
+  );
 }
-

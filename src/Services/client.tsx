@@ -31,12 +31,36 @@ export const User1: AcessToken | null = getUserId();
 
 console.log('User1:', User1);
 
+
+
   export const API = axios.create({
     baseURL: base_url,
     headers: {
-      'Authorization': User1 ? `Bearer ${User1!.acessToken}` : '',
+      'Authorization': User1 ? `Bearer ${User1.acessToken}` : '',
     },
   });
+
+
+export const checkAuthorization = async () => {
+  try {
+
+    const postInstance = await createPostInstance();
+    const response = await postInstance.post('');
+    console.log(response);
+
+    if (Number(response.status) === 200) {
+      console.log('Recurso encontrado');
+      return true;
+    } else {
+      console.log('Recurso não encontrado');
+      return false;
+    }
+  } catch (error) {
+    console.log('Erro ao verificar autorização:', error);
+    return false;
+  }
+};
+
 
 export function TimeConverter(days: number): string {
   const timestamp = Date.now();
@@ -55,6 +79,31 @@ export function TimeConverter(days: number): string {
 
 export const timestamp = Date.now();
 
+export const getUserRoles = () => {
+  const acesstoken = JSON.parse(localStorage.getItem('@user') || 'false')
+  console.log('aaaaaaaa')
+  console.log(acesstoken)
+  const UserId = String(acesstoken.user.type)
+
+  console.log(UserId)
+
+  return [UserId]
+}
+;
+export const get = async () => {
+  try {
+    const accessToken = await JSON.parse(localStorage.getItem('@user') || 'false');
+    console.log('aaaaaaaa');
+    console.log(accessToken);
+    const userId = String(accessToken.acessToken);
+    console.log(userId);
+
+    return userId;
+  } catch (error) {
+    console.log('Erro ao obter o ID do usuário:', error);
+    return null;
+  }
+};
 
 
 // Exemplo de uso em um componente
@@ -73,4 +122,14 @@ export const getLocalStorage = (key:string) => {
     return item 
   }
   return null;
+};
+export const createPostInstance = async () => {
+  const token = await get(); // Obtenha o token de acesso
+
+  return axios.create({
+    baseURL: base_url,
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  });
 };
