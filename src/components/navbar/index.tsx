@@ -12,6 +12,7 @@ import { SlSettings } from "react-icons/sl";
 import Link from "next/link";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
+import "src/page/globals.css"; // Importe o arquivo CSS personalizado
 
 const Sidebar = () => {
   const [open, setOpen] = useState(true);
@@ -72,30 +73,35 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="">
+    <div className="   ">
       <div
-        className={`w-screen inset-0 bg-black/50 ${
-          open ? "block" : "hidden"
-        } md:hidden`}
+        className={`fixed inset-0 bg-black/50 ${open ? "block" : "hidden"} `}
         onClick={toggleSidebar}
       ></div>
 
       <div
-        className={`fixed bg-yellow-300 h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
-          open ? "translate-x-0 w-60" : "w-10 md:w-20 -translate-x-full "
-        } ${
+        className={`fixed bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
+          open
+            ? "translate-x-0 w-60 absolute"
+            : "w-10 md:w-20 -translate-x-full "
+        } overflow-x-hidden scrollable-container   overflow-auto scrollbar-thin scrollbar-thumb-transparent scrollbar-track-transparent${
           isTabletMid && !open ? "hidden" : ""
         }  md:translate-x-0 md:static  md:p-4 relative `}
       >
-        <Image
-          alt="control"
-          src="/control.png"
-          className={`absolute cursor-pointer  rounded-full 
-       -right-3 top-9 w-7 border-2 border-yellow-300 ${!open && "rotate-180"} `}
-          width={50}
-          height={50}
-          onClick={() => setOpen(!open)}
-        />
+        {" "}
+        <div className="relative">
+          <Image
+            alt="control"
+            src="/control.png"
+            className={`absolute cursor-pointer  rounded-full 
+       -right-4 top-12 w-6 border-2 border-yellow-300 ${
+         !open && "rotate-180 "
+       } `}
+            width={50}
+            height={50}
+            onClick={() => setOpen(!open)}
+          />
+        </div>
         <div className="flex gap-x-4 items-center">
           <Image
             alt="logo"
@@ -114,7 +120,6 @@ const Sidebar = () => {
             Hello Service
           </h1>
         </div>
-
         <ul className="pt-2">
           {Menus.map((menu) => (
             <div key={menu.title}>
@@ -139,7 +144,6 @@ const Sidebar = () => {
             </div>
           ))}
         </ul>
-
         <motion.div
           onClick={toggleSidebar}
           animate={
