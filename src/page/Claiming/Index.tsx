@@ -1,159 +1,143 @@
-﻿import { ReactNode, useEffect, useState } from 'react'
-import Loading from '../../components/Loading'
-import { API, TimeConverter, UserId } from '../../Services/client'
-import Pagination from '../../components/pagination'
+﻿import Pagination from "@/components/pagination";
+import React, { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import { API, TimeConverter, UserId } from "../../Services/client";
 
-interface User_Ban {
-  denounced_id: any
-  solved: any
-  solve: ReactNode
-  reason: ReactNode
-  denounced: ReactNode
-  action: ReactNode
-  time: ReactNode
-  id: number
-  Nome: string
-  msg: string
-  by: string
+interface UserBan {
+  denounced_id: any;
+  solved: any;
+  solve: React.ReactNode;
+  reason: React.ReactNode;
+  denounced: React.ReactNode;
+  action: React.ReactNode;
+  time: React.ReactNode;
+  id: number;
+  Nome: string;
+  msg: string;
+  by: string;
 }
 
-export const Claiming = () => {
-  const [data, setData] = useState<User_Ban[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postsPerPage, setPostsPerPage] = useState(10)
-
-  function handlerdata() {
-    return TimeConverter(7)
-  }
+const Claiming = () => {
+  const [data, setData] = useState<UserBan[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [postsPerPage] = useState(10);
 
   useEffect(() => {
-    try {
-   
-      API.get('/denounce/')
-        .then(function (response: any) {
-          setIsLoading(true)
-          setData(response.data)
-          console.log(data)
-          console.log('feito')
-        })
-        .catch((error: any) => {
-          console.log(error)
-        })
-        .finally(() => setIsLoading(false))
-    } catch (error: any) {
-      console.log('Error')
-    } // complete loading success/fail
-  }, [data])
-  const lastPostIndex = currentPage * postsPerPage
-  const firstPostIndex = lastPostIndex - postsPerPage
-  const currentPosts = Array.isArray(data) ? data.slice(firstPostIndex, lastPostIndex) : [data]
+    const fetchData = async () => {
+      try {
+        const response = await API.get("/denounce/");
+        setData(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
 
-  function Ban(data: any, typeban: string) {
-    API.post('/sanction/' + typeban, data)
-      .then(function (response: any) {
-        setData(response.data)
-        console.log(data)
-        console.log(response.data)
-        console.log('feito')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-      .finally(() => setIsLoading(false))
-  }
-  function Solve(data: any) {
-    API.patch('/denounce/markassolved', data)
-      .then(function (response: any) {
-        setData(response.data)
-        console.log(data)
-        console.log(response.data)
-        console.log('feito')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-      .finally(() => setIsLoading(false))
-  }
-  console.log(data)
+    fetchData();
+  }, []);
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+  const currentPosts = data.slice(firstPostIndex, lastPostIndex);
+
+  const handleBan = async (data: any, typeban: string) => {
+    try {
+      const response = await API.post(`/sanction/${typeban}`, data);
+      setData(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSolve = async (data: any) => {
+    try {
+      const response = await API.patch("/denounce/markassolved", data);
+      setData(response.data);
+      console.log(response.data);
+      console.log("feito");
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
-    <div className="flex-1 p-6  font-bold h-screen overflow-y-auto">
-      <div className={`py-2 mb-4 text-2xl font-semibold flex-1 `}>
+    <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
+      <div className="py-2 mb-4 text-2xl font-semibold">
         <h2>Claiming</h2>
       </div>
 
-      <div
-        className="  
-                py-3     grid grid-flow-col sm:grid-cols-3"
-      >
-        <div className=" w-full px-2 py-2">User</div>
-        <div className="  w-full border-x px-2 py-2 ">Reason</div>
-        <div className=" w-full px-2 py-2   ">Status</div>
+      <div className="py-3 grid grid-cols-4">
+        <div className="px-2 py-2">User</div>
+        <div className="border-l border-r px-2 py-2">Reason</div>
+        <div className="px-2 py-2">Status</div>
       </div>
+
       <div>
         {isLoading ? (
           <Loading />
         ) : (
           currentPosts.map((data) => (
-            <div key={data.id}>
-              {' '}
-              <div
-                className="
-                m-2 border-4 border-gray-700 text-center rounded-lg
-                    "
-              >
-                <div className="grid grid-cols-1   inline-y text-center md:grid-cols-2 xl:grid-flow-col ">
-                  <div className="  w-full m-auto  border-gray-700  py-3   hover:bg-gray-200">
-                    {data.denounced}
-                  </div>
-                  <div className="   border-gray-700 m-auto py-3  hover:bg-gray-200 w-full  ">
-                    {data.reason}
-                  </div>
-                  <div className=" w-full  border-gray-700    m-auto hover:bg-gray-200 ">
-                    <button
-                      className={` ${
-                        data.solved == false
-                          ? 'bg-red-500 hover:bg-red-600 px-3.5 '
-                          : 'bg-green-500 hover:bg-green-700 px-7 '
-                      } text-sm w-full  py-4 m-auto text-white font-bold`}
-                      onClick={() => Solve({ id: data.id })}
-                    >
-                      {data.solved == false ? 'Não lida ' : 'Lida'}
-                    </button>
-                  </div>
-                  <div className=" border-gray-700     hover:bg-gray-800 mx-auto w-full m-auto ">
-                    <details className="  py-3.5 px-8 relative cursor-pointer bg-gray-900     hover:bg-gray-800 w-full  open:ring-1 open:ring-black/5 open:shadow-lg   transform-gpu delay-75 duration-100 ease-in-out ">
-                      <summary className="  text-white dark:text-white font-semibold select-none">
-                        Ban
-                      </summary>
-                      <div className="grid relative gap-2 ">
-                        <button
-                          className="bg-red-500 hover:bg-red-700 text-sm py-2 px-2  text-white font-bold  "
-                          onClick={() =>
-                            Ban({ userid: UserId(), userban: data.denounced_id }, 'permanent')
-                          }
-                        >
-                          Permanente
-                        </button>
-                        <button
-                          className="bg-slate-800 text-sm hover:bg-slate-900 text-white font-bold py-2 px-2"
-                          onClick={() =>
-                            Ban(
-                              {
-                                userid: UserId(),
-                                userban: data.denounced_id,
-                                bantime: handlerdata()
-                              },
-                              'temporary'
-                            )
-                          }
-                        >
-                          Temporario
-                        </button>
-                      </div>
-                    </details>
-                  </div>
+            <div
+              key={data.id}
+              className="m-2 border border-gray-700 rounded-lg"
+            >
+              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
+                <div className="p-3 hover:bg-gray-200">{data.denounced}</div>
+                <div className="p-3 hover:bg-gray-200">{data.reason}</div>
+                <div className="p-3 hover:bg-gray-200">
+                  <button
+                    className={`${
+                      data.solved === false
+                        ? "bg-red-500 hover:bg-red-600"
+                        : "bg-green-500 hover:bg-green-700"
+                    } text-sm w-full py-4 text-white font-bold`}
+                    onClick={() => handleSolve({ id: data.id })}
+                  >
+                    {data.solved === false ? "Não lida" : "Lida"}
+                  </button>
+                </div>
+                <div className="p-3 bg-gray-800 m-3 hover:bg-gray-800">
+                  <details className="relative cursor-pointer">
+                    <summary className="text-white font-semibold select-none">
+                      Ban
+                    </summary>
+                    <div className="grid gap-2 p-2">
+                      <button
+                        className="bg-red-500 hover:bg-red-700 text-sm py-2 px-2 text-white font-bold"
+                        onClick={() =>
+                          handleBan(
+                            { userid: UserId(), userban: data.denounced_id },
+                            "permanent"
+                          )
+                        }
+                      >
+                        Permanente
+                      </button>
+                      <button
+                        className="bg-slate-800 hover:bg-slate-900 text-sm text-white font-bold py-2 px-2"
+                        onClick={() =>
+                          handleBan(
+                            {
+                              userid: UserId(),
+                              userban: data.denounced_id,
+                              bantime: TimeConverter(7),
+                            },
+                            "temporary"
+                          )
+                        }
+                      >
+                        Temporário
+                      </button>
+                    </div>
+                  </details>
                 </div>
               </div>
             </div>
@@ -161,7 +145,7 @@ export const Claiming = () => {
         )}
       </div>
 
-      <div className=" flex justify-center text-sm w-full">
+      <div className="flex justify-center text-sm w-full">
         <Pagination
           totalPosts={data.length}
           postsPerPage={postsPerPage}
@@ -170,7 +154,7 @@ export const Claiming = () => {
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Claiming
+export default Claiming;

@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "../../contexts/authContext";
 import Image from "next/image";
-import Loading from "@/components/Loading_small";
+import { CustomClass, Loading } from "@/components/Loading_small";
 
 export const Login = () => {
   const navigate = useRouter();
@@ -68,17 +68,8 @@ export const Login = () => {
             onChange={handlePasswordInput}
             placeholder="Digite sua senha"
           />
-          <button
-            className="mt-5 p-2 rounded-md bg-slate-600 mx-12"
-            onClick={handleSignIn}
-          >
-            {loading ? (
-              <Loading />
-            ) : (
-              <h6 className=" font-semibold  font-mono text-md text-white hover:text-slate-200 ">
-                Entre
-              </h6>
-            )}
+          <button className="" onClick={handleSignIn}>
+            {loading ? <Loading /> : <CustomClass />}
           </button>
         </div>
       </div>

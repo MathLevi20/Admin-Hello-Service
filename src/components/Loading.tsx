@@ -2,7 +2,7 @@ import React from 'react'
 
 const Loading = () => {
   return (
-    <div className="flex items-center justify-center py-24 ">
+    <div className="flex items-center  justify-center py-24 ">
       <div
         className="spinner-border items-center animate-spin                     
         transition duration-1000
