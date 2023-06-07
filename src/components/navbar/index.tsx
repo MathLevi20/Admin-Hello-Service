@@ -74,14 +74,14 @@ const Sidebar = () => {
   return (
     <div className="">
       <div
-        className={`absolute inset-0 bg-black/50 ${
+        className={`w-screen inset-0 bg-black/50 ${
           open ? "block" : "hidden"
         } md:hidden`}
         onClick={toggleSidebar}
       ></div>
 
       <div
-        className={`fixed bg-yellow-300 h-100 p-10 transition-transform  min-h-screen duration-400 overflow-y-visible transform ${
+        className={`fixed bg-yellow-300 h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
           open ? "translate-x-0 w-60" : "w-10 md:w-20 -translate-x-full "
         } ${
           isTabletMid && !open ? "hidden" : ""
@@ -159,14 +159,15 @@ const Sidebar = () => {
           className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
         ></motion.div>
       </div>
+
       <div className="absolute">
         <div
-          className="relative p-1 ml-2 my-6 md:hidden cursor-pointer"
+          className="relative p-2 ml-3 my-5  md:hidden cursor-pointer"
           onClick={toggleSidebar}
         >
           <MdMenu
             className={`cursor-pointer relative rounded-full 
-       left-1 top-0 w-10 border-yellow-300 ${!open ? " " : "hidden"} `}
+       top-0 w-10 border-yellow-300 ${!open ? " " : "hidden"} `}
             size={40}
             onClick={() => toggleSidebar}
           />

@@ -87,7 +87,7 @@ const Log = () => {
 
   return (
     <div className="w-full">
-      <div className="flex-1 p-6 font-bold h-screen text-center scrollbar-thin scrollbar-thumb-gray-900 scrollbar-track-gray-900">
+      <div className="flex-1 p-3 md:p-6 font-bold h-screen text-center scrollbar-thin overflow-y-auto scrollbar-thumb-gray-900 scrollbar-track-gray-900">
         <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
           <h2>Logs</h2>
         </div>
