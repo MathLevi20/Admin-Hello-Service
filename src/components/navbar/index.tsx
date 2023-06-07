@@ -159,9 +159,9 @@ const Sidebar = () => {
           className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
         ></motion.div>
       </div>
-      <div className="">
+      <div className="absolute">
         <div
-          className="fixed p-1 ml-2 my-6 md:hidden cursor-pointer"
+          className="relative p-1 ml-2 my-6 md:hidden cursor-pointer"
           onClick={toggleSidebar}
         >
           <MdMenu
