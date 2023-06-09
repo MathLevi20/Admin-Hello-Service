@@ -113,9 +113,7 @@ const Sidebar = () => {
       </div>
       <div className={` md:flex ${!isPageOpen ? "hidden" : ""}`}>
         <div
-          className={`fixed inset-0 bg-black/50 ${
-            isPageOpen ? "block" : "hidden"
-          } `}
+          className={`  bg-black/50 ${isPageOpen ? "block" : "hidden"} `}
           onClick={toggleSidebar}
         ></div>
         <div
