@@ -97,7 +97,7 @@ const Log = () => {
   return (
     <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
       <Nav />
-      <div className="flex-1 px-3 md:p-6 font-boldtext-center scrollbar-thin overflow-y-auto scrollbar-thumb-gray-900 scrollbar-track-gray-900">
+      <div className="flex-1 px-3 md:p-6 font-bold text-center ">
         <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
           <h2>Logs</h2>
         </div>
@@ -119,19 +119,19 @@ const Log = () => {
               rowClassName=" hover:bg-gray-200 rounded-lg "
               dataSource={data}
               columns={columns}
-              pagination={{ position: ["bottomCenter"] }}
+              pagination={{ position: ["bottomCenter"], pageSize: 10 }}
               rowKey="id"
             />
           )}
         </div>
-        <div className="p-1 flex justify-center w-full">
+        {/* <div className="p-1 flex justify-center w-full">
           <Pagination
             totalPosts={data.length}
             postsPerPage={postsPerPage}
             setCurrentPage={setCurrentPage}
             currentPage={currentPage}
           />
-        </div>
+          </div>*/}
       </div>
     </div>
   );

@@ -18,6 +18,7 @@ import { PageContext } from "@/contexts/PageContext";
 
 const Sidebar = () => {
   const pageContext = useContext(PageContext);
+
   let isTabletMid = useMediaQuery({ query: "(max-width: 767px)" });
   if (!pageContext) {
     return null;
@@ -118,7 +119,7 @@ const Sidebar = () => {
           onClick={toggleSidebar}
         ></div>
         <div
-          className={` bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
+          className={` bg-yellow-300  h-full p-10 transition-transform   min-h-screen duration-400  transform ${
             isPageOpen
               ? "translate-x-0 w-60 absolute"
               : "w-10 md:w-20 -translate-x-full "
