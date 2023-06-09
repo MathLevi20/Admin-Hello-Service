@@ -1,9 +1,10 @@
-﻿import { ReactNode, useEffect, useState } from "react";
+﻿import { ReactNode, useContext, useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import { API, formatDate } from "../../Services/client";
 import Pagination from "../../components/pagination";
 import { Table } from "antd";
 import Nav from "@/components/navbar/index";
+import { PageContext } from "@/contexts/PageContext";
 
 interface User_Ban {
   action: ReactNode;
@@ -19,6 +20,7 @@ const Log = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(7);
+  const [top, setTop] = useState("topCenter");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -39,6 +41,11 @@ const Log = () => {
 
     fetchData();
   }, []);
+  const pageContext = useContext(PageContext);
+  if (!pageContext) {
+    return null;
+  }
+  const { isPageOpen, togglePage, themePage, theme } = pageContext;
 
   const downloadFile = ({ data, fileName, fileType }: any) => {
     const blob = new Blob([data], { type: fileType });
@@ -87,10 +94,10 @@ const Log = () => {
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
-  const [top, setTop] = useState("topCenter");
   return (
-    <div className="w-full">
-      <div className="flex-1 p-3 md:p-6 font-bold h-screen text-center scrollbar-thin overflow-y-auto scrollbar-thumb-gray-900 scrollbar-track-gray-900">
+    <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
+      <Nav />
+      <div className="flex-1 px-3 md:p-6 font-boldtext-center scrollbar-thin overflow-y-auto scrollbar-thumb-gray-900 scrollbar-track-gray-900">
         <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
           <h2>Logs</h2>
         </div>

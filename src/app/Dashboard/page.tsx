@@ -9,7 +9,7 @@ const ProtectedDashboard = withAuth(Dashboard, ["admin"]); // Envolve o componen
 
 export default function Page() {
   return (
-    <div className="relative flex flex-grow">
+    <div className="flex-row md:flex w-full">
       <Nav />
       <ProtectedDashboard />{" "}
       {/* Renderize o componente ProtectedDashboard, que foi envolvido com o HOC withAuth */}

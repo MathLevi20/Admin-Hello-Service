@@ -9,7 +9,7 @@ const ProtectedContract = withAuth(Contract, ["admin"]); // Envolve o componente
 
 export default function page() {
   return (
-    <div className="flex">
+    <div className="flex-row md:flex w-full">
       <Nav />
       <ProtectedContract />
     </div>

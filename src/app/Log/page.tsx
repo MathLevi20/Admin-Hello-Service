@@ -2,6 +2,7 @@
 
 import Nav from "@/components/navbar";
 import withAuth from "@/contexts/Acesscontrol";
+import { PageProvider } from "@/contexts/PageContext";
 import Dashboard from "@/page/Dashboard/Index";
 import Log from "@/page/Log/Log";
 import React from "react";
@@ -10,9 +11,10 @@ const ProtectedLog = withAuth(Log, ["admin", "moderator"]); // Envolve o compone
 
 export default function page() {
   return (
-    <div className="flex">
-      <Nav />
-      <ProtectedLog />
-    </div>
+    <PageProvider>
+      <div>
+        <ProtectedLog />
+      </div>
+    </PageProvider>
   );
 }

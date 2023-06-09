@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { MdMenu } from "react-icons/md";
+import { useContext, useState } from "react";
+import { MdMenu, MdOutlineChevronRight, MdOutlineClose } from "react-icons/md";
 import { motion } from "framer-motion";
 import {
   BsArrow90DegDown,
@@ -13,14 +13,21 @@ import Link from "next/link";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import "src/page/globals.css"; // Importe o arquivo CSS personalizado
+import { CloseOutlined } from "@ant-design/icons";
+import { PageContext } from "@/contexts/PageContext";
 
 const Sidebar = () => {
-  const [open, setOpen] = useState(true);
+  const pageContext = useContext(PageContext);
   let isTabletMid = useMediaQuery({ query: "(max-width: 767px)" });
+  if (!pageContext) {
+    return null;
+  }
+  const { isPageOpen, togglePage, themePage, theme } = pageContext;
 
   const toggleSidebar = () => {
-    setOpen(!open);
+    togglePage();
   };
+  console.log(isPageOpen);
   const Menus = [
     {
       title: "Dashboard",
@@ -73,108 +80,131 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="static">
-      <div
-        className={`fixed inset-0 bg-black/50 ${open ? "block" : "hidden"} `}
-        onClick={toggleSidebar}
-      ></div>
+    <div className="flex">
+      <div className="bg-black-300">
+        <header className="flex justify-end">
+          <div className="flex">
+            <div className="md:hidden cursor-pointer">
+              <div className={`flex my-5 ml-4 ${!isPageOpen ? "" : "hidden"}`}>
+                <MdMenu
+                  className={`m-auto cursor-pointer rounded-full border-yellow-300 ${
+                    !isPageOpen ? "" : "hidden"
+                  }`}
+                  size={40}
+                  onClick={toggleSidebar}
+                />
+                <Image
+                  alt="logo"
+                  src="/logo.svg"
+                  className="cursor-pointer p-2 duration-300"
+                  width={50}
+                  height={50}
+                />
 
-      <div
-        className={` bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
-          open
-            ? "translate-x-0 w-60 absolute"
-            : "w-10 md:w-20 -translate-x-full "
-        } overflow-x-hidden scrollable-container   overflow-auto scrollbar-thin scrollbar-thumb-transparent scrollbar-track-transparent${
-          isTabletMid && !open ? "hidden" : ""
-        }  md:translate-x-0 md:static  md:p-4 relative `}
-      >
-        {" "}
-        <div className="relative">
-          <Image
-            alt="control"
-            src="/control.png"
-            className={`absolute cursor-pointer  rounded-full 
-       -right-4 top-12 w-6 border-2 border-yellow-300 ${
-         !open && "rotate-180 "
-       } `}
-            width={50}
-            height={50}
-            onClick={() => setOpen(!open)}
-          />
-        </div>
-        <div className="flex gap-x-4 items-center">
-          <Image
-            alt="logo"
-            src="/logo.svg"
-            className={`cursor-pointer  duration-300 ${
-              open && "rotate-[360deg]"
-            }`}
-            width={50}
-            height={50}
-          />
-          <h1
-            className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
-              !open && "scale-0"
-            }`}
-          >
-            Hello Service
-          </h1>
-        </div>
-        <ul className="pt-2">
-          {Menus.map((menu) => (
-            <div key={menu.title}>
-              <Link href={menu.path}>
-                <li
-                  className={`text-gray-800 text-sm cursor-pointer flex items-center gap-x-4 p-2
-               hover:bg-slate-200 rounded-md ${menu.gap ? "mt-5" : "mt-2"}`}
-                >
-                  <Image
-                    alt="icon"
-                    src={`${menu.src}`}
-                    width={25}
-                    height={25}
-                  />
-                  <span
-                    className={`${!open && "hidden"} origin-left duration-200`}
-                  >
-                    {menu.title}
-                  </span>
-                </li>
-              </Link>
+                <h1 className="text-gray-800 m-auto gap-2 font-medium origin-left text-xl duration-100">
+                  Hello Service
+                </h1>
+              </div>
+              <div className={!isPageOpen ? "" : "hidden"}></div>
             </div>
-          ))}
-        </ul>
-        <motion.div
-          onClick={toggleSidebar}
-          animate={
-            open
-              ? {
-                  x: -10,
-                  y: -200,
-                  rotate: 0,
-                }
-              : {
-                  x: -10,
-                  y: -200,
-                  rotate: 180,
-                }
-          }
-          transition={{ duration: 0 }}
-          className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
-        ></motion.div>
+          </div>
+        </header>
       </div>
-
-      <div className="absolute">
+      <div className={` md:flex ${!isPageOpen ? "hidden" : ""}`}>
         <div
-          className="relative p-2 ml-3 my-5  md:hidden cursor-pointer"
+          className={`fixed inset-0 bg-black/50 ${
+            isPageOpen ? "block" : "hidden"
+          } `}
           onClick={toggleSidebar}
+        ></div>
+        <div
+          className={` bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
+            isPageOpen
+              ? "translate-x-0 w-60 absolute"
+              : "w-10 md:w-20 -translate-x-full "
+          } overflow-x-hidden scrollable-container   overflow-auto scrollbar-thin scrollbar-thumb-transparent scrollbar-track-transparent${
+            isTabletMid && !isPageOpen ? "hidden" : ""
+          }  md:translate-x-0 md:static  md:p-4 relative `}
         >
-          <MdMenu
-            className={`cursor-pointer relative rounded-full 
-       top-0 w-10 border-yellow-300 ${!open ? " " : "hidden"} `}
+          {" "}
+          <div className="relative"></div>
+          <div className="flex gap-x-4 items-center">
+            <Image
+              alt="logo"
+              src="/logo.svg"
+              className={`cursor-pointer  duration-300 ${
+                isPageOpen && "rotate-[360deg]"
+              }`}
+              width={50}
+              height={50}
+            />
+            <h1
+              className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
+                !isPageOpen && "scale-0"
+              }`}
+            >
+              Hello Service
+            </h1>
+            <div className=" rounded-lg hover:bg-gray-200 ">
+              <MdOutlineClose
+                className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
+                  !isPageOpen && "scale-0"
+                }`}
+                size={35}
+                onClick={toggleSidebar}
+              />
+            </div>
+          </div>
+          <MdOutlineChevronRight
+            className={`cursor-pointer rounded-lg m-auto bg-gray-200  hover:bg-gray-300  
+     border-2 border-yellow-300 hover: ${!isPageOpen ? "" : "hidden"} `}
             size={40}
-            onClick={() => toggleSidebar}
+            onClick={toggleSidebar}
           />
+          <ul className="pt-2">
+            {Menus.map((menu) => (
+              <div key={menu.title}>
+                <Link href={menu.path}>
+                  <li
+                    className={`text-gray-800 text-sm cursor-pointer flex items-center gap-x-4 p-2.5
+               hover:bg-slate-200 rounded-md ${menu.gap ? "mt-5" : "mt-2"}`}
+                  >
+                    <Image
+                      alt="icon"
+                      src={`${menu.src}`}
+                      width={25}
+                      height={25}
+                    />
+                    <span
+                      className={`${
+                        !isPageOpen && "hidden"
+                      } origin-left duration-200`}
+                    >
+                      {menu.title}
+                    </span>
+                  </li>
+                </Link>
+              </div>
+            ))}
+          </ul>
+          <motion.div
+            onClick={toggleSidebar}
+            animate={
+              isPageOpen
+                ? {
+                    x: -10,
+                    y: -200,
+                    rotate: 0,
+                  }
+                : {
+                    x: -10,
+                    y: -200,
+                    rotate: 180,
+                  }
+            }
+            transition={{ duration: 0 }}
+            className="absolute w-fit h-fit md:block z-50 hidden right-2 bottom-3 cursor-pointer"
+          ></motion.div>
         </div>
       </div>
     </div>
