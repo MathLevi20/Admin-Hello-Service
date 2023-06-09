@@ -3,7 +3,7 @@
 import { ChangeEvent, useState } from "react";
 import { useAuth } from "../../contexts/authContext";
 import Image from "next/image";
-import { Loading, CustomClass } from "../../components/Loading_small";
+import { Loading, CustomClass } from "../../components/LoadingSmall";
 
 export const Register = () => {
   const { signIn } = useAuth();

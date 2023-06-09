@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 import { useAuth } from "../../contexts/authContext";
 import Image from "next/image";
-import { CustomClass, Loading } from "@/components/Loading_small";
+import { CustomClass, Loading } from "@/components/LoadingSmall";
 
 export const Login = () => {
   const navigate = useRouter();

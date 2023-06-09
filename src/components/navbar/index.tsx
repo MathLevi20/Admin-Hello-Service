@@ -73,14 +73,14 @@ const Sidebar = () => {
   ];
 
   return (
-    <div className="   ">
+    <div className="static">
       <div
         className={`fixed inset-0 bg-black/50 ${open ? "block" : "hidden"} `}
         onClick={toggleSidebar}
       ></div>
 
       <div
-        className={`fixed bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
+        className={` bg-yellow-300  h-full p-10 transition-transform  max-h-screen min-h-screen duration-400  transform ${
           open
             ? "translate-x-0 w-60 absolute"
             : "w-10 md:w-20 -translate-x-full "

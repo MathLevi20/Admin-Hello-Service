@@ -80,11 +80,14 @@ const Log = () => {
       key: "time",
     },
   ];
+  const customTableStyle = {
+    color: "black",
+  };
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
-
+  const [top, setTop] = useState("topCenter");
   return (
     <div className="w-full">
       <div className="flex-1 p-3 md:p-6 font-bold h-screen text-center scrollbar-thin overflow-y-auto scrollbar-thumb-gray-900 scrollbar-track-gray-900">
@@ -104,11 +107,12 @@ const Log = () => {
             <Loading />
           ) : (
             <Table
+              style={customTableStyle}
               className=""
               rowClassName=" hover:bg-gray-200 rounded-lg "
-              dataSource={currentPosts}
+              dataSource={data}
               columns={columns}
-              pagination={false}
+              pagination={{ position: ["bottomCenter"] }}
               rowKey="id"
             />
           )}

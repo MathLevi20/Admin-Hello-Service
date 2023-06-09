@@ -10,9 +10,9 @@ const ProtectedAdmin = withAuth(Admin, ["admin"]); // Envolve o componente Dashb
 
 export default function page() {
   return (
-    <div className="flex">
+    <div className="flex h-screen">
       <AuthContextProvider>
-        <Nav />
+        <Nav/>
         <ProtectedAdmin />
       </AuthContextProvider>
     </div>
