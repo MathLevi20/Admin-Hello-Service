@@ -2,10 +2,10 @@ import Nav from "@/components/navbar/index";
 import withAuth from "@/contexts/Acesscontrol";
 import { PageContext } from "@/contexts/PageContext";
 import React, { useContext } from "react";
-import Claiming from "./Claiming";
-const ProtectedClaiming = withAuth(Claiming, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
+import Log from "./Log";
+const ProtectedLog = withAuth(Log, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
 
-function ClaimingPage() {
+function LogPage() {
   const pageContext = useContext(PageContext);
   if (!pageContext) {
     return null;
@@ -15,9 +15,9 @@ function ClaimingPage() {
   return (
     <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
       <Nav />
-      <ProtectedClaiming />
+      <ProtectedLog />
     </div>
   );
 }
 
-export default ClaimingPage;
+export default LogPage;

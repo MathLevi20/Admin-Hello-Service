@@ -1,17 +1,15 @@
-'use client'
+"use client";
 
-import Nav from '@/components/navbar'
-import withAuth from '@/contexts/Acesscontrol';
-import Claiming from '@/page/Claiming/Index'
-import React from 'react'
-
-const ProtectedClamming = withAuth(Claiming, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
+import Nav from "@/components/navbar";
+import withAuth from "@/contexts/Acesscontrol";
+import { PageProvider } from "@/contexts/PageContext";
+import ClaimingPage from "@/page/Claiming/Index";
+import React from "react";
 
 export default function page() {
   return (
-    <div className="flex  overflow-y-visible ">
-      <Nav />
-      <ProtectedClamming />
-    </div>
+    <PageProvider>
+      <ClaimingPage />
+    </PageProvider>
   );
 }

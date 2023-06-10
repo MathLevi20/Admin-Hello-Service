@@ -1,10 +1,11 @@
 ﻿import { ReactNode, useContext, useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import { API, formatDate } from "../../Services/client";
-import Pagination from "../../components/pagination";
 import { Table } from "antd";
-import Nav from "@/components/navbar/index";
 import { PageContext } from "@/contexts/PageContext";
+import "src/page/globals.css";
+import Pagination from "@mui/material/Pagination";
+import { purple, red } from "@mui/material/colors";
 
 interface User_Ban {
   action: ReactNode;
@@ -19,8 +20,10 @@ const Log = () => {
   const [data, setData] = useState<User_Ban[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(7);
+  const [postsPerPage, setPostsPerPage] = useState(6);
   const [top, setTop] = useState("topCenter");
+
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +35,14 @@ const Log = () => {
           time: formatDate(item.time),
         }));
         setData(filteredData);
+        setTotalPages(Math.ceil(filteredData.length / postsPerPage));
       } catch (error) {
         console.log(error);
       } finally {
         setIsLoading(false);
       }
     };
+    const primary = red[500]; // #f44336
 
     fetchData();
   }, []);
@@ -69,7 +74,12 @@ const Log = () => {
       fileType: "text/json",
     });
   };
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
   const columns = [
     {
       title: "Id",
@@ -95,36 +105,44 @@ const Log = () => {
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
   return (
-    <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
-      <Nav />
-      <div className="flex-1 px-3 md:p-6 font-bold text-center ">
-        <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
-          <h2>Logs</h2>
-        </div>
-        <button
-          type="button"
-          className="flex w-max rounded bg-yellow-500 p-2 text-white  hover:bg-yellow-600 hover:text-gray-200"
-          onClick={exportToJson}
-        >
-          Export to JSON
-        </button>
+    <div className="flex-1 px-3 md:p-6 font-bold text-center ">
+      <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
+        <h2>Logs</h2>
+      </div>
+      <button
+        type="button"
+        className="flex w-max rounded bg-yellow-500 p-2 text-white  hover:bg-yellow-600 hover:text-gray-200"
+        onClick={exportToJson}
+      >
+        Export to JSON
+      </button>
 
-        <div className="">
-          {isLoading ? (
-            <Loading />
-          ) : (
-            <Table
-              style={customTableStyle}
-              className=""
-              rowClassName=" hover:bg-gray-200 rounded-lg "
-              dataSource={data}
-              columns={columns}
-              pagination={{ position: ["bottomCenter"], pageSize: 10 }}
-              rowKey="id"
-            />
-          )}
-        </div>
-        {/* <div className="p-1 flex justify-center w-full">
+      <div className="">
+        {isLoading ? (
+          <Loading />
+        ) : (
+          <Table
+            style={customTableStyle}
+            className=""
+            rowClassName=" hover:bg-gray-200 rounded-lg "
+            dataSource={currentPosts}
+            pagination={false}
+            columns={columns}
+            rowKey="id"
+          />
+        )}
+      </div>
+      <div className="p-3 flex justify-center w-full">
+        <Pagination
+          
+          shape="rounded"
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
+        />
+      </div>
+
+      {/* <div className="p-1 flex justify-center w-full">
           <Pagination
             totalPosts={data.length}
             postsPerPage={postsPerPage}
@@ -132,7 +150,6 @@ const Log = () => {
             currentPage={currentPage}
           />
           </div>*/}
-      </div>
     </div>
   );
 };

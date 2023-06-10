@@ -1,20 +1,21 @@
-'use client'
+"use client";
 
-import Nav from '@/components/navbar'
-import { AuthContextProvider } from '@/contexts/authContext'
-import Claiming from '@/page/Claiming/Index'
-import Dashboard from '@/page/Dashboard/Index'
-import Settings from '@/page/Settings/Index'
-import React from 'react'
+import Nav from "@/components/navbar";
+import { AuthContextProvider } from "@/contexts/authContext";
+import { PageProvider } from "@/contexts/PageContext";
+import Claiming from "@/page/Claiming/Claiming";
+import Dashboard from "@/page/Dashboard/Index";
+import Settings from "@/page/Settings/Index";
+import React from "react";
 
 export default function page() {
   return (
-    <div className='flex'>
-    <AuthContextProvider>
-    <Nav/>
-    <Settings/>
-    </AuthContextProvider>
-
+    <div className="flex">
+      <AuthContextProvider>
+        <PageProvider>
+          <Settings />
+        </PageProvider>
+      </AuthContextProvider>
     </div>
-  )
+  );
 }

@@ -53,4 +53,27 @@
     background-color: rgba(0, 0, 0, 0.5); /* Cor da barra de rolagem */
     z-index: 10; /* Posiciona a barra de rolagem acima dos itens */
   }
+  .ant-pagination-item-active a {
+    background-color: #ffffff; /* Change this to the desired color */
+    border-color: #ff0000; /* Change this to the desired color */
+    color: #ffffff; /* Change this to the desired color */
+  }
+
+  .ant-pagination-item-active a:hover {
+    background-color: #ffffff; /* Change this to the desired hover color */
+    border-color: #ffffff; /* Change this to the desired hover color */
+    color: #ffffff; /* Change this to the desired hover color */
+  }
+  /* customStyles.css */
+  .ant-pagination .ant-pagination-item-active {
+    font-weight: 600; /* Change this to the desired font weight */
+    background-color: yellow; /* Change this to the desired background color */
+    border-color: red; /* Change this to the desired border color */
+  }
+  /* customStyles.css */
+  .custom-pagination-item-active {
+    font-weight: 600; /* Altere isso para o peso da fonte desejado */
+    background-color: yellow; /* Altere isso para a cor de fundo desejada */
+    border-color: red; /* Altere isso para a cor da borda desejada */
+  }
 }

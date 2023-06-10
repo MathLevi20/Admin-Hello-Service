@@ -2,19 +2,16 @@
 
 import Nav from "@/components/navbar";
 import withAuth from "@/contexts/Acesscontrol";
-import { PageProvider } from "@/contexts/PageContext";
+import { PageContext, PageProvider } from "@/contexts/PageContext";
 import Dashboard from "@/page/Dashboard/Index";
+import LogPage from "@/page/Log/Index";
 import Log from "@/page/Log/Log";
-import React from "react";
+import React, { useContext } from "react";
 
-const ProtectedLog = withAuth(Log, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
-
-export default function page() {
+export default function Page() {
   return (
     <PageProvider>
-      <div>
-        <ProtectedLog />
-      </div>
+      <LogPage />
     </PageProvider>
   );
 }

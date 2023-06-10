@@ -1,14 +1,6 @@
 import { useContext, useState } from "react";
 import { MdMenu, MdOutlineChevronRight, MdOutlineClose } from "react-icons/md";
 import { motion } from "framer-motion";
-import {
-  BsArrow90DegDown,
-  BsFillArrowLeftCircleFill,
-  BsPerson,
-} from "react-icons/bs";
-import { AiOutlineAppstore } from "react-icons/ai";
-import { HiOutlineDatabase } from "react-icons/hi";
-import { SlSettings } from "react-icons/sl";
 import Link from "next/link";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
