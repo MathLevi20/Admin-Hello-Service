@@ -3,6 +3,7 @@
 import Nav from "@/components/navbar/index";
 import withAuth from "@/contexts/Acesscontrol";
 import { AuthContextProvider } from "@/contexts/authContext";
+import { PageProvider } from "@/contexts/PageContext";
 import Admin from "@/page/Admin/Index";
 import React from "react";
 
@@ -12,8 +13,10 @@ export default function page() {
   return (
     <div className="flex h-screen">
       <AuthContextProvider>
-        <Nav/>
-        <ProtectedAdmin />
+        <PageProvider>
+          <Nav />
+          <ProtectedAdmin />
+        </PageProvider>
       </AuthContextProvider>
     </div>
   );

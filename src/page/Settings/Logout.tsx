@@ -4,46 +4,13 @@ export const Logout = () => {
   const { authData, signOut } = useAuth();
 
   return (
-    <div
-      className="w-screen"
-      style={{
-        background: "#222",
-        display: "flex",
-        alignItems: "center",
-        flexDirection: "column",
-        justifyContent: "center",
-        height: "100%",
-      }}
-    >
-      <span
-        style={{
-          fontSize: 28,
-          fontWeight: "bold",
-          color: "#ddd",
-        }}
-      >
-        {"(^_^)"}
-      </span>
-      <h1
-        style={{
-          fontSize: 28,
-          fontWeight: "bold",
-          textAlign: "center",
-          color: "#ddd",
-        }}
-      >
+    <div className="w-full bg-gray-900 flex items-center justify-center flex-col h-full">
+      <span className="text-4xl font-bold text-white mb-6">{"(^_^)"}</span>
+      <h1 className="text-4xl font-bold text-white text-center">
         {authData?.user.username}
       </h1>
       <button
-        style={{
-          marginTop: 30,
-          fontSize: 16,
-          borderRadius: 10,
-          width: "min(300px, 90%)",
-          padding: 5,
-          fontWeight: "bold",
-          background: "#666",
-        }}
+        className="mt-8 text-xl font-bold bg-gray-600 text-white px-6 py-3 rounded"
         onClick={signOut}
       >
         Sair

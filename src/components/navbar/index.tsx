@@ -138,7 +138,7 @@ const Sidebar = () => {
             </h1>
             <div className=" rounded-lg hover:bg-gray-200 ">
               <MdOutlineClose
-                className={`text-gray-800 font-medium origin-left text-xl duration-100 ${
+                className={`text-gray-800 font-medium  origin-left text-xl duration-100 ${
                   !isPageOpen && "scale-0"
                 }`}
                 size={35}
@@ -147,7 +147,7 @@ const Sidebar = () => {
             </div>
           </div>
           <MdOutlineChevronRight
-            className={`cursor-pointer rounded-lg m-auto bg-gray-200  hover:bg-gray-300  
+            className={`cursor-pointer mt-4 rounded-lg m-auto bg-gray-200  hover:bg-gray-300  
      border-2 border-yellow-300 hover: ${!isPageOpen ? "" : "hidden"} `}
             size={40}
             onClick={toggleSidebar}
