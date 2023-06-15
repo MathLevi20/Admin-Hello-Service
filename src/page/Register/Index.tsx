@@ -1,7 +1,7 @@
 ﻿"use client";
 
 import { ChangeEvent, useState } from "react";
-import { useAuth } from "../../contexts/authContext";
+import { useAuth } from "../../contexts/AuthContext";
 import Image from "next/image";
 import { Loading, CustomClass } from "../../components/LoadingSmall";
 

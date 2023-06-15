@@ -1,94 +1,95 @@
-﻿import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
-import Loading from '../../components/Loading'
-import { API } from '../../Services/client'
-import Comments from './Comments'
-import Empty from './empty'
-import Image from 'next/image';
+﻿import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import Loading from "../../components/Loading";
+import { API } from "../../Services/client";
+import Comments from "./Comments";
+import Empty from "./empty";
+import Image from "next/image";
 interface User {
-  [x: string]: any
-  id: string
-  Nome: string
-  cpf: string
-  comments: [any]
+  [x: string]: any;
+  id: string;
+  Nome: string;
+  cpf: string;
+  comments: [any];
 }
 function timeConverter(UNIX_timestamp: any) {
-  const a = new Date(UNIX_timestamp * 1000)
+  const a = new Date(UNIX_timestamp * 1000);
   const months = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec'
-  ]
-  const year = a.getFullYear()
-  const month = months[a.getMonth()]
-  const date = a.getDate()
-  const hour = a.getHours()
-  const min = a.getMinutes()
-  const sec = a.getSeconds()
-  const time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  const hour = a.getHours();
+  const min = a.getMinutes();
+  const sec = a.getSeconds();
+  const time =
+    date + " " + month + " " + year + " " + hour + ":" + min + ":" + sec;
 
-  return time
+  return time;
 }
 
 interface props {
-  id:any;
+  id: any;
 }
-const User = (props:props) => {
-  const [data, setData] = useState<User[]>([])
-  const [complaints, setComplaints] = useState<User[]>([])
-  const [report, setReport] = useState<User[]>([])
-  const [isLoading, setIsLoading] = useState(true)
+const User = (props: props) => {
+  const [data, setData] = useState<User[]>([]);
+  const [complaints, setComplaints] = useState<User[]>([]);
+  const [report, setReport] = useState<User[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   const params = useRouter();
-  console.log(params)
+  console.log(params);
 
-  const Id = props.id
+  const Id = props.id;
   useEffect(() => {
     try {
-      API.get('/profile/'+ Id)
+      API.get("/profile/" + Id)
         .then(function (response: any) {
-          setData(response.data)
-          console.log(data)
-          console.log('feito')
+          setData(response.data);
+          console.log(data);
+          console.log("feito");
         })
         .catch((error: any) => {
-          console.log(error)
-        })
+          console.log(error);
+        });
     } catch (error: any) {
-      console.log('Error')
+      console.log("Error");
     } // complete loading success/fail
-  }, [Id, data])
+  }, [Id, data]);
   useEffect(() => {
-    API.get('/denounce/denounced/' + Id)
+    API.get("/denounce/denounced/" + Id)
       .then(function (response: any) {
-        setComplaints(response.data)
-        console.log('feito')
+        setComplaints(response.data);
+        console.log("feito");
       })
       .catch((error: any) => {
-        console.log(error)
+        console.log(error);
       })
-      .finally(() => setIsLoading(false))
-  }, [Id])
+      .finally(() => setIsLoading(false));
+  }, [Id]);
   useEffect(() => {
-    API.get('/denounce/denouncer/' + Id)
- 
+    API.get("/denounce/denouncer/" + Id)
+
       .then(function (response: any) {
-        setReport(response.data)
-        console.log('feito')
+        setReport(response.data);
+        console.log("feito");
       })
       .catch((error: any) => {
-        console.log(error)
-      })
-  }, [Id])
+        console.log(error);
+      });
+  }, [Id]);
 
   return (
     <div className="  h-screen overflow-y-auto w-full">
@@ -106,8 +107,8 @@ const User = (props:props) => {
                         <Image
                           className="mx-auto rounded-full"
                           src={
-                            data.avatar == 'linkaqui'
-                              ? 'https://img.icons8.com/ios/512/test-account.png'
+                            data.avatar == "linkaqui"
+                              ? "https://img.icons8.com/ios/512/test-account.png"
                               : data.avatar
                           }
                           width="50"
@@ -159,23 +160,35 @@ const User = (props:props) => {
             </div>
             <div className="bg-gray-900 h-full px-10 py-2   ">
               <div className="bg-black-900 ">
-                <div className={`py-2 text-xl font-semibold flex-1 text-white `}>
+                <div
+                  className={`py-2 text-xl font-semibold flex-1 text-white `}
+                >
                   <h2>Complaints</h2>
                 </div>
                 {complaints.length > 0 ? (
                   complaints.map((data: any) => (
-                    <Comments key={data.id} by={data.denounced} msg={data.reason} />
+                    <Comments
+                      key={data.id}
+                      by={data.denounced}
+                      msg={data.reason}
+                    />
                   ))
                 ) : (
                   <Empty />
                 )}
-                <div className={`py-2 text-xl font-semibold flex-1 text-white `}>
+                <div
+                  className={`py-2 text-xl font-semibold flex-1 text-white `}
+                >
                   <h2>Reports</h2>
                 </div>
 
                 {report.length > 0 ? (
                   report.map((data: any) => (
-                    <Comments key={data.id} by={data.denounced} msg={data.reason} />
+                    <Comments
+                      key={data.id}
+                      by={data.denounced}
+                      msg={data.reason}
+                    />
                   ))
                 ) : (
                   <Empty />
@@ -186,7 +199,7 @@ const User = (props:props) => {
         )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default User
+export default User;

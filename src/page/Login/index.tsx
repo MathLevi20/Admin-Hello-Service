@@ -3,7 +3,7 @@
 import { ChangeEvent, useContext, useState } from "react";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import { useAuth } from "../../contexts/authContext";
+import { useAuth } from "../../contexts/AuthContext";
 import Image from "next/image";
 import { CustomClass, Loading } from "@/components/LoadingSmall";
 

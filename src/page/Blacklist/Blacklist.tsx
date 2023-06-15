@@ -1,99 +1,74 @@
-﻿import axios from "axios";
-import { Key, ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
-import { API, TimeConverter, UserId } from "../../Services/client";
+import { API } from "../../Services/client";
 import Image from "next/image";
 import Pagination from "@mui/material/Pagination";
 
-interface User {
-  email: string;
-  average_rating: string | null;
-  type: string;
-  name: string;
-  banided: boolean;
-  id: string;
-  Nome: string;
-  cpf: string;
-  username: string;
-  avatar: string;
-  is_banided_perm: boolean;
-  is_banided_temp: boolean;
-}
-
-export const Accounts = () => {
-  const [data, setData] = useState<User[]>([]);
+export const Blacklist = () => {
+  const [data, setData] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(6);
+  const [postsPerPage, setPostsPerPage] = useState(20);
   const [totalPages, setTotalPages] = useState(1);
+  const mockTitles = ["Perfil", "Tipo de usuario", "Cidade", "Ações"];
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await API.get("/profile/all");
-        const filteredData = response.data;
-        setData(filteredData);
-        console.log(filteredData);
-        setData(filteredData);
-        setTotalPages(Math.ceil(response.data.length / postsPerPage));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setCurrentPage(page);
-  };
-  const handleBan = async (data: any, typeban: string) => {
     try {
-      await API.post(`/sanction/${typeban}`, data);
-      console.log("feito");
-    } catch (error) {
-      console.log(error);
+      API.get("/profile/all")
+        .then(function (response: any) {
+          setData(response.data);
+          console.log(response.data);
+          setData(response.data);
+          setTotalPages(Math.ceil(response.data.length / postsPerPage));
+        })
+        .catch((error) => {
+          console.log(error);
+        })
+        .finally(() => setIsLoading(false));
+    } catch (error: any) {
+      console.log("Error");
     }
-  };
-  function Ban(data: any, typeban: string) {
-    API.post("/sanction/" + typeban, data)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  }, []);
+
+  const handleUnban = (data: any) => {
+    API.patch("/sanction/revogue", data)
       .then(function (response: any) {
         setData(response.data);
-        console.log(data);
         console.log("feito");
       })
       .catch((error) => {
         console.log(error);
       })
       .finally(() => setIsLoading(false));
-  }
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
   };
-
-  const filteredData = data.filter(
-    (data: User) =>
-      data.username.toLowerCase().includes(search.toLowerCase()) &&
-      !data.banided
-  );
 
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = filteredData.slice(firstPostIndex, lastPostIndex);
-  const mockTitles = ["Usuario", "Detalhes", "Estado", "Ações"];
-  function handlerdata() {
-    return TimeConverter(7);
+
+  function changedata(data: any) {
+    if (search === "") {
+      return data
+        .slice(firstPostIndex, lastPostIndex)
+        .filter((item: any) => item.banided === true);
+    }
+
+    return data.filter(
+      (item: any) =>
+        item.username.toLowerCase().includes(search.toLowerCase()) &&
+        item.banided === true
+    );
   }
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
   return (
-    <div className="flex-1 p-6 font-bold h-full overflow-y-auto">
-      <div className="py-2 mb-4 text-2xl font-semibold flex-1">
-        <h2>Accounts</h2>
+    <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
+      <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
+        <h2>Blacklist</h2>
         <div className="mt-3 w-full flex justify-center pt-0">
           <input
             type="text"
@@ -126,7 +101,7 @@ export const Accounts = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {filteredData.map((item: any) => (
+                  {changedata(data).map((item: any) => (
                     <tr className="bg-white" key={item.id}>
                       <td className="p-3 flex justify-left text-sm space-x-2 text-gray-700 whitespace-nowrap">
                         <Image
@@ -154,7 +129,7 @@ export const Accounts = () => {
                       </td>
                       <td className="p-3 space-x-2 text-sm text-gray-700 whitespace-nowrap">
                         <button
-                          className="bg-green-500 hover:bg-green-700 text-sm text-white font-bold py-2   px-2 rounded "
+                          className="bg-green-500 rounded-md hover:bg-green-700 text-sm text-white font-bold py-2 px-2 "
                           onClick={(event) =>
                             (window.location.href = "/User/" + item.id)
                           }
@@ -162,37 +137,17 @@ export const Accounts = () => {
                           Ver Perfil
                         </button>
                         <button
-                          className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2  px-2 rounded"
-                          onClick={() =>
-                            Ban(
-                              { userid: UserId(), userban: item.id },
-                              "permanent"
-                            )
-                          }
+                          className="bg-yellow-400 rounded-md text-[12px] hover:bg-yellow-500 text-white font-bold py-2 px-2"
+                          onClick={() => handleUnban({ userban: item.id })}
                         >
-                          Permanente
-                        </button>
-                        <button
-                          className="bg-slate-800 text-sm hover:bg-slate-900 text-white font-bold py-2 px-2 rounded"
-                          onClick={() =>
-                            Ban(
-                              {
-                                userid: UserId(),
-                                userban: item.id,
-                                bantime: handlerdata(),
-                              },
-                              "temporary"
-                            )
-                          }
-                        >
-                          Temporario
+                          Desbanir
                         </button>
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              {filteredData.length === 0 && !isLoading && (
+              {changedata(data).length === 0 && !isLoading && (
                 <div className="text-center py-4">
                   Nenhum usuário banido encontrado.
                 </div>
@@ -200,7 +155,7 @@ export const Accounts = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-              {filteredData.map((item: any) => (
+              {changedata(data).map((item: any) => (
                 <div className="bg-white  p-4 rounded-lg shadow" key={item.id}>
                   <div className=" items-center space-y-2 text-sm">
                     <div className=" text-center  mx-auto">
@@ -239,7 +194,7 @@ export const Accounts = () => {
 
                   <div className="flex items-center justify-center gap-x-2">
                     <button
-                      className="bg-green-500 hover:bg-green-700 text-sm text-white font-bold py-1   px-2 rounded "
+                      className="bg-green-500 rounded-md hover:bg-green-700 text-sm text-white font-bold py-2 px-2 "
                       onClick={(event) =>
                         (window.location.href = "/User/" + item.id)
                       }
@@ -247,32 +202,15 @@ export const Accounts = () => {
                       Ver Perfil
                     </button>
                     <button
-                      className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2  px-2 rounded"
-                      onClick={() =>
-                        Ban({ userid: UserId(), userban: item.id }, "permanent")
-                      }
+                      className="bg-yellow-400 rounded-md text-[12px] hover:bg-yellow-500 text-white font-bold py-2 px-2"
+                      onClick={() => handleUnban({ userban: item.id })}
                     >
-                      Permanente
-                    </button>
-                    <button
-                      className="bg-slate-800 text-sm hover:bg-slate-900 text-white font-bold py-2 px-2 rounded"
-                      onClick={() =>
-                        Ban(
-                          {
-                            userid: UserId(),
-                            userban: item.id,
-                            bantime: handlerdata(),
-                          },
-                          "temporary"
-                        )
-                      }
-                    >
-                      Temporario
+                      Desbanir
                     </button>
                   </div>
                 </div>
               ))}{" "}
-              {filteredData.length === 0 && !isLoading && (
+              {changedata(data).length === 0 && !isLoading && (
                 <div className="text-center py-4">
                   Nenhum usuário banido encontrado.
                 </div>
@@ -281,7 +219,7 @@ export const Accounts = () => {
           </>
         )}
       </div>
-      <div className="flex justify-center text-sm w-full">
+      <div className="p-3 flex justify-center w-full">
         <Pagination
           shape="rounded"
           count={totalPages}
@@ -292,4 +230,5 @@ export const Accounts = () => {
     </div>
   );
 };
-export default Accounts;
+
+export default Blacklist;

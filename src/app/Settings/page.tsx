@@ -1,7 +1,7 @@
 "use client";
 
 import Nav from "@/components/navbar";
-import { AuthContextProvider } from "@/contexts/authContext";
+import { AuthContextProvider } from "@/contexts/AuthContext";
 import { PageProvider } from "@/contexts/PageContext";
 import Claiming from "@/page/Claiming/Claiming";
 import Dashboard from "@/page/Dashboard/Index";
@@ -10,12 +10,10 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="flex">
-      <AuthContextProvider>
-        <PageProvider>
-          <Settings />
-        </PageProvider>
-      </AuthContextProvider>
-    </div>
+    <AuthContextProvider>
+      <PageProvider>
+        <Settings />
+      </PageProvider>
+    </AuthContextProvider>
   );
 }

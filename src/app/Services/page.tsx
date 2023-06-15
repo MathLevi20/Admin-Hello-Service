@@ -8,10 +8,8 @@ import React from "react";
 
 export default function page() {
   return (
-    <div className="">
       <PageProvider>
         <ServicesPage />
       </PageProvider>
-    </div>
   );
 }

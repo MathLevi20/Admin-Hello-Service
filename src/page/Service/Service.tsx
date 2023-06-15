@@ -5,9 +5,9 @@ import ModalService from "./ModalService";
 import ModalServicePost from "./ModalServicePost";
 import Loading from "../../components/Loading";
 import { API, getLocalStorage } from "../../Services/client";
-import Pagination from "../../components/pagination";
 import Image from "next/image";
 import { type } from "os";
+import { Pagination } from "@mui/material";
 
 interface Data_Services {
   price: number;
@@ -24,7 +24,7 @@ const Services = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage, setPostsPerPage] = useState(11);
   const [search, setSearch] = useState("");
-
+  const [totalPages, setTotalPages] = useState(1);
   const acesstoken = JSON.parse(getLocalStorage("@user") || "false");
   console.log(acesstoken);
 
@@ -56,6 +56,7 @@ const Services = () => {
           setData(response.data);
           console.log(data);
           console.log("feito");
+          setTotalPages(Math.ceil(response.data.length / postsPerPage));
         })
         .catch((error: any) => {
           console.log(error);
@@ -78,7 +79,12 @@ const Services = () => {
 
     return data;
   }
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
   return (
     <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
       <div className={`py-2 mb-4 text-2xl font-semibold flex-1 `}>
@@ -121,7 +127,7 @@ const Services = () => {
                         hover:bg-gray-100"
                 key={data.userid}
               >
-                <div className="justify-between ">
+                <div className="flex justify-between ">
                   <button className="" onClick={togglePopup}>
                     <div className="text-start truncate  pl-1 pb-1">
                       <p className="text-sm overflow-hidden truncate w-20">
@@ -150,12 +156,12 @@ const Services = () => {
             ))}
         </div>
       )}
-      <div className="p-1 flex justify-center  text-sm w-full">
+      <div className="p-3 flex justify-center w-full">
         <Pagination
-          totalPosts={data.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
+          shape="rounded"
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
         />
       </div>
     </div>

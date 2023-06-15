@@ -1,16 +1,13 @@
-'use client'
+"use client";
 
-import { Login } from '@/page/Login'
-import React from 'react'
-import { AuthContextProvider } from '../../contexts/authContext'
+import { Login } from "@/page/Login";
+import React from "react";
+import { AuthContextProvider } from "../../contexts/AuthContext";
 
 export default function page() {
   return (
-    <div className='flex'>
     <AuthContextProvider>
-      <Login/>
+      <Login />
     </AuthContextProvider>
-
-    </div>
-  )
+  );
 }

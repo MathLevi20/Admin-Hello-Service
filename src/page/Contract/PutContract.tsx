@@ -1,35 +1,43 @@
-﻿import { useEffect, useState } from 'react'
+﻿import { useEffect, useState } from "react";
 
-import React from 'react'
-import { API } from '../../Services/client'
+import React from "react";
+import { API } from "../../Services/client";
 
-export const Set = ({ descricao, title, id }: { descricao: string; title: string; id: string }) => {
-  const [Desc, setDesc] = useState(descricao)
-  const [Title, setTitle] = useState(title)
-  const [showModal, setShowModal] = useState(false)
+export const Set = ({
+  descricao,
+  title,
+  id,
+}: {
+  descricao: string;
+  title: string;
+  id: string;
+}) => {
+  const [Desc, setDesc] = useState(descricao);
+  const [Title, setTitle] = useState(title);
+  const [showModal, setShowModal] = useState(false);
 
   async function Put(title: string, descricao: string, id: string) {
     const data = {
       id: id,
       name: Title,
-      content: Desc
-    }
+      content: Desc,
+    };
 
-    API.put('/userterm/update', data)
+    API.put("/userterm/update", data)
       .then(function (response: any) {
-        console.log(data)
-        window.location.reload()
-        setShowModal(false)
+        console.log(data);
+        window.location.reload();
+        setShowModal(false);
       })
       .catch(function (error: any) {
-        console.error(error)
-      })
+        console.error(error);
+      });
   }
 
   return (
     <div>
       <button
-        className="bg-slate-800 text-[12px]  hover:bg-slate-900 text-white font-bold  px-3 rounded ease-linear transition-all duration-150"
+        className="bg-slate-800 mt-5 text-[12px] text-left p-2 hover:bg-slate-900 text-white font-bold  px-3 rounded-md ease-linear transition-all duration-150"
         type="button"
         onClick={() => setShowModal(true)}
       >
@@ -55,7 +63,7 @@ export const Set = ({ descricao, title, id }: { descricao: string; title: string
                   </div>
                   <div className="py-2 px-4 border-2  bg-white rounded-b-lg  dark:bg-gray-800">
                     <textarea
-                      style={{ minHeight: '40vh', height: 'unset' }}
+                      style={{ minHeight: "40vh", height: "unset" }}
                       id="editor"
                       className="block px-0 w-full text-sm outline-none
                                          text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0
@@ -90,7 +98,7 @@ export const Set = ({ descricao, title, id }: { descricao: string; title: string
         </>
       ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default Set
+export default Set;

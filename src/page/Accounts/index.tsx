@@ -1,9 +1,12 @@
 import Nav from "@/components/navbar/index";
+import withAuth from "@/contexts/Acesscontrol";
 import { PageContext } from "@/contexts/PageContext";
-import { useContext, useState } from "react";
-import Logout from "./Logout";
+import React, { useContext } from "react";
+import Accounts from "./Accounts";
 
-export const Settings = () => {
+const ProtectedAccounts = withAuth(Accounts, ["admin", "moderator"]); // Envolve o componente Dashboard com o HOC withAuth
+
+function AccountsPage() {
   const pageContext = useContext(PageContext);
   if (!pageContext) {
     return null;
@@ -13,9 +16,9 @@ export const Settings = () => {
   return (
     <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
       <Nav />
-      <Logout />
+      <ProtectedAccounts />
     </div>
   );
-};
+}
 
-export default Settings;
+export default AccountsPage;

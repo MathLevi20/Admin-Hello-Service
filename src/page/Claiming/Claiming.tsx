@@ -1,7 +1,7 @@
-﻿import Pagination from "@/components/pagination";
-import React, { useEffect, useState } from "react";
+﻿import React, { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import { API, TimeConverter, UserId } from "../../Services/client";
+import Pagination from "@mui/material/Pagination";
 
 interface UserBan {
   denounced_id: any;
@@ -22,12 +22,14 @@ const Claiming = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [postsPerPage] = useState(10);
-
+  const [totalPages, setTotalPages] = useState(1);
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await API.get("/denounce/");
         setData(response.data);
+        setData(response.data);
+        setTotalPages(Math.ceil(response.data.length / postsPerPage));
         console.log(response.data);
       } catch (error) {
         console.log(error);
@@ -38,7 +40,12 @@ const Claiming = () => {
 
     fetchData();
   }, []);
-
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
   const lastPostIndex = currentPage * postsPerPage;
   const firstPostIndex = lastPostIndex - postsPerPage;
   const currentPosts = data.slice(firstPostIndex, lastPostIndex);
@@ -67,90 +74,156 @@ const Claiming = () => {
       setIsLoading(false);
     }
   };
+  const mockTitles = ["Usuario", "Detalhes", "Estado", "Tipo de Banimento"];
 
   return (
-    <div className="flex-1 p-6 font-bold h-screen overflow-y-auto">
+    <div className="flex-1 p-6 bg-gray-100 font-bold h-screen overflow-y-auto">
       <div className="py-2 mb-4 text-2xl font-semibold">
         <h2>Claiming</h2>
       </div>
-
-      <div className="py-3 grid grid-cols-4">
-        <div className="px-2 py-2">User</div>
-        <div className="border-l border-r px-2 py-2">Reason</div>
-        <div className="px-2 py-2">Status</div>
-      </div>
-
       <div>
         {isLoading ? (
           <Loading />
         ) : (
-          currentPosts.map((data) => (
-            <div
-              key={data.id}
-              className="m-2 border border-gray-700 rounded-lg"
-            >
-              <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4">
-                <div className="p-3 hover:bg-gray-200">{data.denounced}</div>
-                <div className="p-3 hover:bg-gray-200">{data.reason}</div>
-                <div className="p-3 hover:bg-gray-200">
-                  <button
-                    className={`${
-                      data.solved === false
-                        ? "bg-red-500 hover:bg-red-600"
-                        : "bg-green-500 hover:bg-green-700"
-                    } text-sm w-full py-4 text-white font-bold`}
-                    onClick={() => handleSolve({ id: data.id })}
-                  >
-                    {data.solved === false ? "Não lida" : "Lida"}
-                  </button>
-                </div>
-                <div className="p-3 bg-gray-800 m-3 hover:bg-gray-800">
-                  <details className="relative cursor-pointer">
-                    <summary className="text-white font-semibold select-none">
-                      Ban
-                    </summary>
-                    <div className="grid gap-2 p-2">
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-sm py-2 px-2 text-white font-bold"
-                        onClick={() =>
-                          handleBan(
-                            { userid: UserId(), userban: data.denounced_id },
-                            "permanent"
-                          )
-                        }
+          <>
+            <div className="overflow-auto rounded-lg shadow hidden md:block">
+              <table className="w-full">
+                <thead className="bg-gray-50 border-b-2 border-gray-200">
+                  <tr>
+                    {mockTitles.map((title, index) => (
+                      <th
+                        key={index}
+                        className="w-20 p-3 text-sm font-semibold tracking-wide text-left"
                       >
-                        Permanente
-                      </button>
-                      <button
-                        className="bg-slate-800 hover:bg-slate-900 text-sm text-white font-bold py-2 px-2"
-                        onClick={() =>
-                          handleBan(
-                            {
-                              userid: UserId(),
-                              userban: data.denounced_id,
-                              bantime: TimeConverter(7),
-                            },
-                            "temporary"
-                          )
-                        }
-                      >
-                        Temporário
-                      </button>
-                    </div>
-                  </details>
-                </div>
-              </div>
+                        {title}
+                      </th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-gray-100">
+                  {currentPosts.map((item) => (
+                    <tr className="bg-white" key={item.id}>
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        <a
+                          href="#"
+                          className="font-bold text-blue-500 hover:underline"
+                        >
+                          {item.denounced}
+                        </a>
+                      </td>
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        {item.reason}
+                      </td>
+                      <td className="p-3 text-sm text-gray-700 whitespace-nowrap">
+                        <span
+                          onClick={() => handleSolve({ id: item.id })}
+                          className="p-1.5 text-xs cursor-pointer font-medium uppercase tracking-wider hover:text-green-400 text-green-800 bg-green-200 rounded-lg bg-opacity-50"
+                        >
+                          {item.solved === false ? "Não lida" : "Lida"}
+                        </span>
+                      </td>
+                      <td className="p-3 space-x-2 text-sm text-gray-700 whitespace-nowrap">
+                        <button
+                          className="rounded-md bg-red-500 hover:bg-red-700 text-sm py-2 px-2 text-white font-bold"
+                          onClick={() =>
+                            handleBan(
+                              { userid: UserId(), userban: item.denounced_id },
+                              "permanent"
+                            )
+                          }
+                        >
+                          Permanente
+                        </button>
+                        <button
+                          className="bg-slate-800 rounded-md hover:bg-slate-900 text-sm text-white font-bold py-2 px-2"
+                          onClick={() =>
+                            handleBan(
+                              {
+                                userid: UserId(),
+                                userban: item.denounced_id,
+                                bantime: TimeConverter(7),
+                              },
+                              "temporary"
+                            )
+                          }
+                        >
+                          Temporário
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
-          ))
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
+              {currentPosts.map((item) => (
+                <div className="bg-white  p-4 rounded-lg shadow" key={item.id}>
+                  <div className=" items-center space-y-2 text-sm">
+                    <div className=" text-center  mx-auto">
+                      <a
+                        href="#"
+                        className="text-blue-500 font-bold hover:underline"
+                      >
+                        {item.denounced}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div>
+                    <div className="text-gray-500 text-center ">
+                      <span
+                        onClick={() => handleSolve({ id: item.id })}
+                        className=" text-xs text-center cursor-pointer font-medium uppercase tracking-wider hover:text-green-400 text-green-800 bg-green-200 rounded-lg bg-opacity-50"
+                      >
+                        {item.solved === false ? "Não lida" : "Lida"}
+                      </span>
+                    </div>
+                    <div className="py-2  text-xs text-center font-medium uppercase tracking-wider  rounded-lg bg-opacity-50">
+                      {item.reason}
+                    </div>
+                  </div>
+                  <div className="flex items-center justify-center gap-x-2">
+                    <button
+                      className="bg-red-500 rounded-md hover:bg-red-700 text-sm py-2 px-2 text-white font-bold"
+                      onClick={() =>
+                        handleBan(
+                          { userid: UserId(), userban: item.denounced_id },
+                          "permanent"
+                        )
+                      }
+                    >
+                      Permanente
+                    </button>
+                    <button
+                      className="bg-slate-800 rounded-md hover:bg-slate-900 text-sm text-white font-bold py-2 px-2"
+                      onClick={() =>
+                        handleBan(
+                          {
+                            userid: UserId(),
+                            userban: item.denounced_id,
+                            bantime: TimeConverter(7),
+                          },
+                          "temporary"
+                        )
+                      }
+                    >
+                      Temporário
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </>
         )}
       </div>
 
-      <div className="flex justify-center text-sm w-full">
+      <div className="p-3 flex justify-center w-full">
         <Pagination
-          totalPosts={data.length}
-          postsPerPage={postsPerPage}
-          setCurrentPage={setCurrentPage}
-          currentPage={currentPage}
+          shape="rounded"
+          count={totalPages}
+          page={currentPage}
+          onChange={handlePageChange}
         />
       </div>
     </div>
