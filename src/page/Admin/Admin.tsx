@@ -53,7 +53,7 @@ export const Admin = () => {
   }, [data]);
 
   const HandlerSwitchAdmin = (data: any, typeban: string) => {
-    API.post("/auth/" + typeban, data)
+    API.patch("/auth/" + typeban, data)
       .then((response: any) => {
         fetchData();
       })
@@ -87,7 +87,7 @@ export const Admin = () => {
     setCurrentPage(page);
   };
   return (
-    <div className="flex-1 md:p-6 py-6 font-bold h-screen overflow-y-auto">
+    <div className="flex-1 px-3 md:p-6 font-bold bg-gray-100 text-center md:text-left">
       <div
         className={`py-2 mb-4 text-2xl font-semibold text-center justify-center md:text-left flex-1 `}
       >

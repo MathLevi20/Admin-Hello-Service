@@ -77,7 +77,7 @@ const Claiming = () => {
   const mockTitles = ["Usuario", "Detalhes", "Estado", "Tipo de Banimento"];
 
   return (
-    <div className="flex-1 p-6 bg-gray-100 font-bold h-screen overflow-y-auto">
+    <div className="flex-1 p-6 bg-gray-100 font-bold h-screen text-center md:text-left  overflow-y-auto">
       <div className="py-2 mb-4 text-2xl font-semibold">
         <h2>Claiming</h2>
       </div>

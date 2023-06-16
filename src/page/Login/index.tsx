@@ -24,10 +24,10 @@ export const Login = () => {
   };
 
   const handleSignIn = async () => {
-    setLoading(true);
     try {
+      setLoading(true);
+
       await signIn({ email: username, password });
-      navigate.push(`/Settings`);
     } catch (err) {
       console.log(err);
       setLoading(false);
@@ -46,9 +46,10 @@ export const Login = () => {
           <Image
             src="/logo.svg"
             className={`cursor-pointer  mx-auto p-3"`}
-            width="100"
+            width={50}
             alt="icon"
             height={50}
+            priority={false}
           />
           <h4 className="text-center p-3 text-slate-800 font-semibold  font-mono text-xl ">
             Login

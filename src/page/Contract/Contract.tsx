@@ -79,8 +79,8 @@ const Contract = () => {
     setCurrentPage(page);
   };
   return (
-    <div className="flex-1 p-1 md:p-6 font-bold w-full overflow-y-auto">
-      <div className="py-2 mb-4 text-2xl  font-semibold">
+    <div className="flex-1 px-3 md:p-6 font-bold bg-gray-100 text-center md:text-left">
+      <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
         <h2>Contratos</h2>
         <div className="mt-3 w-full flex justify-center pt-0">
           <input
@@ -106,10 +106,10 @@ const Contract = () => {
               />
               {filterData(data).map((item) => (
                 <div
-                  className="block px-3 py-3 border border-gray-400 mb-2 w-full rounded-md text-black cursor-pointer hover:bg-gray-100 text-[20px]"
+                  className="block px-3 py-3 border border-gray-400 bg-white mb-2 w-full rounded-md text-black cursor-pointer hover:bg-gray-100 text-[20px]"
                   key={item.id}
                 >
-                  <div className="flex justify-between">
+                  <div className="flex justify-between ">
                     <button className="text-left" onClick={togglePopup}>
                       <div className="text-left pl-1">{item.name}</div>
                       <div className="ml-auto">

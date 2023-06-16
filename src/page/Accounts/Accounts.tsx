@@ -91,7 +91,7 @@ export const Accounts = () => {
     return TimeConverter(7);
   }
   return (
-    <div className="flex-1 p-6 font-bold h-full overflow-y-auto">
+    <div className="flex-1 px-3 md:p-6 font-bold bg-gray-100 text-center md:text-left">
       <div className="py-2 mb-4 text-2xl font-semibold flex-1">
         <h2>Accounts</h2>
         <div className="mt-3 w-full flex justify-center pt-0">
@@ -281,7 +281,7 @@ export const Accounts = () => {
           </>
         )}
       </div>
-      <div className="flex justify-center text-sm w-full">
+      <div className="flex p-3 justify-center text-sm w-full">
         <Pagination
           shape="rounded"
           count={totalPages}

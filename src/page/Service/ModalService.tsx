@@ -1,40 +1,40 @@
-﻿'use client'
+﻿"use client";
 
-import { useState } from 'react'
-import axios from 'axios'
-import { API } from '../../Services/client'
+import { useState } from "react";
+import axios from "axios";
+import { API } from "../../Services/client";
 
 export const ModalService = ({
   descricao,
   title,
   id,
   creator,
-  value
+  value,
 }: {
-  descricao: string
-  title: string
-  id: string
-  creator: string
-  value: number
+  descricao: string;
+  title: string;
+  id: string;
+  creator: string;
+  value: number;
 }) => {
-  const [showModal, setShowModal] = useState(false)
-  const [Desc, setDesc] = useState(descricao)
-  const [Value, setValue] = useState(value)
-  const [Title, setTitle] = useState(title)
+  const [showModal, setShowModal] = useState(false);
+  const [Desc, setDesc] = useState(descricao);
+  const [Value, setValue] = useState(value);
+  const [Title, setTitle] = useState(title);
 
   async function Delete(id: string) {
-    API.delete('/service/delete', {
+    API.delete("/service/delete", {
       data: {
-        ServiceId: id
-      }
+        ServiceId: id,
+      },
     })
       .then(function (response: any) {
-        window.location.reload()
-        setShowModal(false)
+        window.location.reload();
+        setShowModal(false);
       })
       .catch(function (error: any) {
-        console.error(error)
-      })
+        console.error(error);
+      });
   }
 
   async function Put(
@@ -49,19 +49,18 @@ export const ModalService = ({
       name: name,
       description: description,
       value: value,
-      creator: creator
-    }
+      creator: creator,
+    };
 
-    API.put('/service/update', data)
+    API.put("/service/update", data)
       .then(function (response: any) {
-        console.log(data)
+        console.log(data);
 
-        window.location.reload()
-        setShowModal(false)
+        setShowModal(false);
       })
       .catch(function (error: any) {
-        console.error(error)
-      })
+        console.error(error);
+      });
   }
 
   return (
@@ -101,15 +100,15 @@ export const ModalService = ({
                       Descrição
                     </p>
                     <textarea
-                      style={{ minHeight: '14vh', height: 'unset' }}
+                      style={{ minHeight: "14vh", height: "unset" }}
                       id="editor"
                       className="block px-0 w-full text-sm outline-none
                                          text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0
                                           dark:text-white dark:placeholder-gray-400"
                       defaultValue={descricao}
                       onChange={(e) => {
-                        setDesc(e.target.value)
-                        console.log(value)
+                        setDesc(e.target.value);
+                        console.log(value);
                       }}
                     />
                   </div>
@@ -127,7 +126,7 @@ export const ModalService = ({
                     className="bg-slate-800 hover:bg-slate-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
-                      Put(id, Title, descricao, Value, creator)
+                      Put(id, Title, descricao, Value, creator);
                     }}
                   >
                     Update
@@ -136,7 +135,7 @@ export const ModalService = ({
                     className="bg-slate-800 hover:bg-slate-900 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                     type="button"
                     onClick={() => {
-                      Delete(id)
+                      Delete(id);
                     }}
                   >
                     Delete
@@ -149,7 +148,7 @@ export const ModalService = ({
         </>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default ModalService
+export default ModalService;

@@ -1,17 +1,15 @@
 "use client";
 
-import Nav from "@/components/navbar";
-import Claiming from "@/page/Claiming/Claiming";
-import Dashboard from "@/page/Dashboard/Index";
-import Settings from "@/page/Settings/Index";
-import User from "@/page/User/Index";
-import React from "react";
+import Nav from "@/components/navbar/index";
+import withAuth from "@/contexts/Acesscontrol";
+import { PageContext, PageProvider } from "@/contexts/PageContext";
+import User from "@/page/User/User";
+import React, { useContext } from "react";
 
-export default function page({ params }: any) {
+export default function Page({ params }: any) {
   return (
-    <div className="flex">
-      <Nav />
+    <PageProvider>
       <User id={params.id} />
-    </div>
+    </PageProvider>
   );
 }

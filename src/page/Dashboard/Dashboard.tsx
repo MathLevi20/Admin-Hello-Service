@@ -33,7 +33,7 @@ function Dashboard() {
   }, []);
 
   return (
-    <div className="flex-1 p-1 md:p-6 font-bold w-full overflow-y-auto">
+    <div className="flex-1 px-3 md:p-6 font-bold  text-center md:text-left ">
       <div className="py-2 mb-4 text-2xl h-full font-semibold">
         <h2>Dashboard</h2>
         {isLoading ? (

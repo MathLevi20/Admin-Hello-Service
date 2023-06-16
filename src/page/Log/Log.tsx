@@ -82,7 +82,7 @@ const Log = () => {
   const mockTitles = ["Data", "Ação", "Administrador"];
 
   return (
-    <div className="flex-1 px-3 md:p-6 font-bold text-center ">
+    <div className="flex-1 px-3 md:p-6 font-bold  text-center md:text-left ">
       <div className={`py-2 mb-4 text-2xl font-semibold flex-1`}>
         <h2>Logs</h2>
       </div>

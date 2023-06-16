@@ -1,29 +1,36 @@
-﻿import { useId, useState } from 'react'
-import axios from 'axios'
-import { API } from '../../Services/client'
+﻿import { useId, useState } from "react";
+import axios from "axios";
+import { API } from "../../Services/client";
 
 export const ModalServicePost = () => {
-  const [showModal, setShowModal] = useState(false)
-  const [description, setDescription] = useState(String)
-  const [value, setValue] = useState(Number)
-  const [name, setName] = useState(String)
+  const [showModal, setShowModal] = useState(false);
+  const [description, setDescription] = useState(String);
+  const [value, setValue] = useState(Number);
+  const [name, setName] = useState(String);
 
-  const client = axios.create({ baseURL: 'https://nightmarelight.onrender.com' })
+  const client = axios.create({
+    baseURL: "https://nightmarelight.onrender.com",
+  });
 
   async function addService(name: string, value: number, description: string) {
-    const acesstoken = JSON.parse(localStorage.getItem('@user') || 'false')
-    const acesstoke1 = acesstoken.user.id
-    const data = { name: name, userid: acesstoke1, value: value, description: description }
+    const acesstoken = JSON.parse(localStorage.getItem("@user") || "false");
+    const acesstoke1 = acesstoken.user.id;
+    const data = {
+      name: name,
+      userid: acesstoke1,
+      value: value,
+      description: description,
+    };
 
-    console.log(typeof acesstoken)
-    API.post('/service/create', data)
+    console.log(typeof acesstoken);
+    API.post("/service/create", data)
       .then(function (response: any) {
-        setShowModal(false)
-        window.location.reload()
+        setShowModal(false);
+        window.location.reload();
       })
       .catch(function (error: any) {
-        console.error(error)
-      })
+        console.error(error);
+      });
   }
 
   return (
@@ -44,7 +51,7 @@ export const ModalServicePost = () => {
                   <div className="mb-3 pt-0">
                     <input
                       type="text"
-                      placeholder={'Cargo'}
+                      placeholder={"Cargo"}
                       onChange={(e) => setName(e.target.value)}
                       className="px-4 py-3 text-base placeholder-gray-400 text-black relative  rounded  border-2 outline-none text-left w-full"
                     />
@@ -52,19 +59,19 @@ export const ModalServicePost = () => {
                   <div className="mb-3 pt-0">
                     <input
                       type="text"
-                      placeholder={'Valor'}
+                      placeholder={"Valor"}
                       onChange={(e) => setValue(Number(e.target.value))}
                       className="px-4 py-3 text-base placeholder-gray-400 text-black relative  rounded border-2 outline-none text-left w-full"
                     />
                   </div>
                   <div className="py-2 px-4 border-2  bg-white rounded-b-lg  dark:bg-gray-800">
                     <textarea
-                      style={{ minHeight: '14vh', height: 'unset' }}
+                      style={{ minHeight: "14vh", height: "unset" }}
                       id="editor"
                       className="block  px-0 w-full text-sm outline-none
                                          text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 
                                           dark:text-white dark:placeholder-gray-400"
-                      placeholder={'Descrição do Cargo'}
+                      placeholder={"Descrição do Cargo"}
                       onChange={(e) => setDescription(e.target.value)}
                     />
                   </div>
@@ -93,7 +100,7 @@ export const ModalServicePost = () => {
         </>
       ) : null}
     </>
-  )
-}
+  );
+};
 
-export default ModalServicePost
+export default ModalServicePost;
