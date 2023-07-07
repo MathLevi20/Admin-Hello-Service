@@ -9,11 +9,15 @@ export const Blacklist = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(20);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
   const mockTitles = ["Perfil", "Tipo de usuario", "Cidade", "Ações"];
 
   useEffect(() => {
+    fetchProfileData();
+  }, [data]);
+
+  const fetchProfileData = () => {
     try {
       API.get("/profile/all")
         .then(function (response: any) {
@@ -29,8 +33,7 @@ export const Blacklist = () => {
     } catch (error: any) {
       console.log("Error");
     }
-  }, []);
-
+  };
   const handleUnban = (data: any) => {
     API.patch("/sanction/revogue", data)
       .then(function (response: any) {
@@ -47,18 +50,22 @@ export const Blacklist = () => {
   const firstPostIndex = lastPostIndex - postsPerPage;
 
   function changedata(data: any) {
-    if (search === "") {
-      return data
+    if (search === "" && Array.isArray(data)) {
+      const currentPosts = data
         .slice(firstPostIndex, lastPostIndex)
         .filter((item: any) => item.banided === true);
+      return currentPosts;
     }
-
-    return data.filter(
-      (item: any) =>
-        item.username.toLowerCase().includes(search.toLowerCase()) &&
-        item.banided === true
-    );
+    return data;
   }
+  const filteredData = Array.isArray(changedata(data))
+    ? changedata(data).filter((item: any) =>
+        search === ""
+          ? item
+          : item.username.toLowerCase().includes(search.toLowerCase()) &&
+            item.banided === true
+      )
+    : [];
   const handlePageChange = (
     event: React.ChangeEvent<unknown>,
     page: number
@@ -74,7 +81,7 @@ export const Blacklist = () => {
             type="text"
             placeholder="Procurar"
             onChange={(e) => {
-              setSearch(e.target.value);
+              setSearch(e.target.value), changedata(data);
             }}
             className="px-4 py-3 flex justify-center w-3/4 placeholder-slate-900 text-black relative rounded text-lg border-2 outline-none text-left"
           />
@@ -101,7 +108,7 @@ export const Blacklist = () => {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {changedata(data).map((item: any) => (
+                  {filteredData.map((item: any) => (
                     <tr className="bg-white" key={item.id}>
                       <td className="p-3 flex justify-left text-sm space-x-2 text-gray-700 whitespace-nowrap">
                         <Image
@@ -147,70 +154,7 @@ export const Blacklist = () => {
                   ))}
                 </tbody>
               </table>
-              {changedata(data).length === 0 && !isLoading && (
-                <div className="text-center py-4">
-                  Nenhum usuário banido encontrado.
-                </div>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-              {changedata(data).map((item: any) => (
-                <div className="bg-white  p-4 rounded-lg shadow" key={item.id}>
-                  <div className=" items-center space-y-2 text-sm">
-                    <div className=" text-center  mx-auto">
-                      <a
-                        href="#"
-                        className="text-blue-500 font-bold hover:underline"
-                      >
-                        {item.denounced}
-                      </a>
-                    </div>
-                  </div>
-                  <div className="p-3 flex justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <Image
-                      className="rounded-full"
-                      src={
-                        item.avatar === "linkaqui"
-                          ? "https://img.icons8.com/ios/512/test-account.png"
-                          : item.avatar
-                      }
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
-                    <p className="text-center my-auto"> {item.username}</p>
-                  </div>
-
-                  <div className="p-3  justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <p className="text-center"> {item.type}</p>
-                  </div>
-                  <div className="p-3  justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <p className="text-center">
-                      {" "}
-                      {item.cyte}- {item.state}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-x-2">
-                    <button
-                      className="bg-green-500 rounded-md hover:bg-green-700 text-sm text-white font-bold py-2 px-2 "
-                      onClick={(event) =>
-                        (window.location.href = "/User/" + item.id)
-                      }
-                    >
-                      Ver Perfil
-                    </button>
-                    <button
-                      className="bg-yellow-400 rounded-md text-[12px] hover:bg-yellow-500 text-white font-bold py-2 px-2"
-                      onClick={() => handleUnban({ userban: item.id })}
-                    >
-                      Desbanir
-                    </button>
-                  </div>
-                </div>
-              ))}{" "}
-              {changedata(data).length === 0 && !isLoading && (
+              {data.length === 0 && !isLoading && (
                 <div className="text-center py-4">
                   Nenhum usuário banido encontrado.
                 </div>

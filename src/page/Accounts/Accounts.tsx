@@ -10,7 +10,7 @@ interface User {
   average_rating: string | null;
   type: string;
   name: string;
-  banided: boolean;
+  banided: any;
   id: string;
   Nome: string;
   cpf: string;
@@ -25,32 +25,25 @@ export const Accounts = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [postsPerPage, setPostsPerPage] = useState(6);
+  const [postsPerPage, setPostsPerPage] = useState(5);
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await API.get("/profile/all");
-        const filteredData = response.data;
-        setData(filteredData);
-        console.log(filteredData);
-        setData(filteredData);
-        setTotalPages(Math.ceil(response.data.length / postsPerPage));
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
     fetchData();
-  }, []);
-  const handlePageChange = (
-    event: React.ChangeEvent<unknown>,
-    page: number
-  ) => {
-    setCurrentPage(page);
+  }, [data]);
+  const fetchData = async () => {
+    try {
+      const response = await API.get("/profile/all");
+      const Data = response.data;
+      setData(Data);
+      console.log(Data);
+
+      setTotalPages(Math.ceil(response.data.length / postsPerPage));
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
   };
   const handleBan = async (data: any, typeban: string) => {
     try {
@@ -64,7 +57,7 @@ export const Accounts = () => {
     API.post("/sanction/" + typeban, data)
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       .then(function (response: any) {
-        setData(response.data);
+        fetchData();
         console.log(data);
         console.log("feito");
       })
@@ -73,23 +66,38 @@ export const Accounts = () => {
       })
       .finally(() => setIsLoading(false));
   }
-  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
 
-  const filteredData = data.filter(
-    (data: User) =>
-      data.username.toLowerCase().includes(search.toLowerCase()) &&
-      !data.banided
-  );
-
-  const lastPostIndex = currentPage * postsPerPage;
-  const firstPostIndex = lastPostIndex - postsPerPage;
-  const currentPosts = filteredData.slice(firstPostIndex, lastPostIndex);
   const mockTitles = ["Usuario", "Detalhes", "Estado", "Ações"];
+
   function handlerdata() {
     return TimeConverter(7);
   }
+
+  const lastPostIndex = currentPage * postsPerPage;
+  const firstPostIndex = lastPostIndex - postsPerPage;
+
+  function changedata(data: any) {
+    if (search === "" && Array.isArray(data)) {
+      const currentPosts = data.slice(firstPostIndex, lastPostIndex);
+      return currentPosts;
+    }
+    return data;
+  }
+  const filteredData = Array.isArray(changedata(data))
+    ? changedata(data).filter((item: any) =>
+        search === ""
+          ? item
+          : item.username.toLowerCase().includes(search.toLowerCase()) &&
+            !item.banided
+      )
+    : [];
+
+  const handlePageChange = (
+    event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    setCurrentPage(page);
+  };
   return (
     <div className="flex-1 px-3 md:p-6 font-bold bg-gray-100 text-center md:text-left">
       <div className="py-2 mb-4 text-2xl font-semibold flex-1">
@@ -192,86 +200,6 @@ export const Accounts = () => {
                   ))}
                 </tbody>
               </table>
-              {filteredData.length === 0 && !isLoading && (
-                <div className="text-center py-4">
-                  Nenhum usuário banido encontrado.
-                </div>
-              )}
-            </div>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-              {filteredData.map((item: any) => (
-                <div className="bg-white  p-4 rounded-lg shadow" key={item.id}>
-                  <div className=" items-center space-y-2 text-sm">
-                    <div className=" text-center  mx-auto">
-                      <a
-                        href="#"
-                        className="text-blue-500 font-bold hover:underline"
-                      >
-                        {item.denounced}
-                      </a>
-                    </div>
-                  </div>
-                  <div className="p-3 flex justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <Image
-                      className="rounded-full"
-                      src={
-                        item.avatar === "linkaqui"
-                          ? "https://img.icons8.com/ios/512/test-account.png"
-                          : item.avatar
-                      }
-                      width={50}
-                      height={50}
-                      alt="Avatar"
-                    />
-                    <p className="text-center my-auto"> {item.username}</p>
-                  </div>
-
-                  <div className="p-3  justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <p className="text-center"> {item.type}</p>
-                  </div>
-                  <div className="p-3  justify-center text-sm space-x-2 text-gray-700 whitespace-nowrap">
-                    <p className="text-center">
-                      {" "}
-                      {item.cyte}- {item.state}
-                    </p>
-                  </div>
-
-                  <div className="flex items-center justify-center gap-x-2">
-                    <button
-                      className="bg-green-500 hover:bg-green-700 text-sm text-white font-bold py-1   px-2 rounded "
-                      onClick={(event) =>
-                        (window.location.href = "/User/" + item.id)
-                      }
-                    >
-                      Ver Perfil
-                    </button>
-                    <button
-                      className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2  px-2 rounded"
-                      onClick={() =>
-                        Ban({ userid: UserId(), userban: item.id }, "permanent")
-                      }
-                    >
-                      Permanente
-                    </button>
-                    <button
-                      className="bg-slate-800 text-sm hover:bg-slate-900 text-white font-bold py-2 px-2 rounded"
-                      onClick={() =>
-                        Ban(
-                          {
-                            userid: UserId(),
-                            userban: item.id,
-                            bantime: handlerdata(),
-                          },
-                          "temporary"
-                        )
-                      }
-                    >
-                      Temporario
-                    </button>
-                  </div>
-                </div>
-              ))}{" "}
               {filteredData.length === 0 && !isLoading && (
                 <div className="text-center py-4">
                   Nenhum usuário banido encontrado.
