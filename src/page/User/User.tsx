@@ -72,18 +72,14 @@ const User = (props: props) => {
   }, [Id]);
 
   return (
-    <div
-      className={` ${
-        isPageOpen ? "flex" : "flex-row"
-      } min-h-screenmd:flex w-full`}
-    >
+    <div className={` ${isPageOpen ? "flex" : "flex-row"} md:flex w-full`}>
       <Nav />
-      <div className="  min-h-screen h-screen  w-full">
+      <div className="  min-h-screen w-full">
         <div className="h-full">
           {isLoading ? (
             <Loading />
           ) : (
-            <div className="h-full">
+            <div className="">
               <div className="mx-auto pt-8 bg-yellow-300 text-gray-800">
                 {data.map((data: any) => (
                   <div key={data.id}>
@@ -144,7 +140,7 @@ const User = (props: props) => {
                   </div>
                 ))}
               </div>
-              <div className="bg-gray-900 h-full px-10 py-2   ">
+              <div className="bg-gray-900 h-screen px-10 py-2   ">
                 <div className="bg-black-900 ">
                   <div
                     className={`py-2 text-xl font-semibold flex-1 text-white `}
