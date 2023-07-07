@@ -30,7 +30,7 @@ export const Accounts = () => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [data]);
   const fetchData = async () => {
     try {
       const response = await API.get("/profile/all");
