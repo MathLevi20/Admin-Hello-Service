@@ -94,6 +94,7 @@ const Contract = () => {
         </div>
       </div>
       {isLoading ? (
+        
         <Loading />
       ) : (
         <div className="py-3">

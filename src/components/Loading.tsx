@@ -3,7 +3,7 @@ import Image from "next/image";
 
 const Loading = () => {
   return (
-    <div className="flex items-center h-screen m-auto justify-center py-24 ">
+    <div className="flex   items-center h-screen m-auto justify-center py-24 ">
       <div
         className="spinner-border items-center animate-spin                     
         transition duration-1000
