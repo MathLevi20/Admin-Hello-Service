@@ -179,61 +179,7 @@ export const Admin = () => {
                 </table>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:hidden">
-                {filteredData.map((item: any) => (
-                  <div
-                    className="bg-white  p-4 rounded-lg shadow"
-                    key={item.id}
-                  >
-                    <div className=" items-center space-y-2 text-sm">
-                      <td className="p-3 space-x-2 text-sm flex justify-center text-gray-700 whitespace-nowrap">
-                        <Image
-                          className="rounded-full"
-                          src={
-                            item.avatar === "linkaqui"
-                              ? item.avatar
-                              : "https://img.icons8.com/ios/512/test-account.png"
-                          }
-                          width={40}
-                          height={40}
-                          alt="Profile Pic"
-                        />
-                        <div className="my-auto">{item.username}</div>
-                      </td>
-                    </div>
-
-                    <div>
-                      <div className="text-gray-500 text-center ">
-                        {" "}
-                        {item.type}
-                      </div>
-                      <div className="py-2  text-xs text-center font-medium uppercase tracking-wider  rounded-lg bg-opacity-50">
-                        <span className=" text-xs text-center cursor-pointer font-medium uppercase tracking-wider hover:text-green-400 text-green-800 bg-green-200 rounded-lg bg-opacity-50">
-                          {item.valid === true ? "Ativado" : "Não ativado"}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="flex items-center justify-center gap-x-2">
-                      <button
-                        className="bg-green-500 hover:bg-green-700 text-sm text-white font-bold py-2  px-2 rounded"
-                        onClick={() =>
-                          HandlerSwitchAdmin({ id: item.id }, "enable")
-                        }
-                      >
-                        Ativar
-                      </button>
-                      <button
-                        className="bg-red-500 hover:bg-red-700 text-sm text-white font-bold py-2  px-2 rounded"
-                        onClick={() =>
-                          HandlerSwitchAdmin({ id: item.id }, "disable")
-                        }
-                      >
-                        Desativar
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
+  
             </>
           )}
         </div>

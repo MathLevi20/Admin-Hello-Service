@@ -21,10 +21,11 @@ export const Blacklist = () => {
     try {
       API.get("/profile/all")
         .then(function (response: any) {
-          setData(response.data);
           console.log(response.data);
-          setData(response.data);
-          setTotalPages(Math.ceil(response.data.length / postsPerPage));
+          const filteredData = response.data;
+
+          setData(filteredData.filter((item: any) => item.banided === true));
+          setTotalPages(Math.ceil(filteredData.data.length / postsPerPage));
         })
         .catch((error) => {
           console.log(error);
@@ -51,9 +52,7 @@ export const Blacklist = () => {
 
   function changedata(data: any) {
     if (search === "" && Array.isArray(data)) {
-      const currentPosts = data
-        .slice(firstPostIndex, lastPostIndex)
-        .filter((item: any) => item.banided === true);
+      const currentPosts = data.slice(firstPostIndex, lastPostIndex);
       return currentPosts;
     }
     return data;
@@ -62,8 +61,7 @@ export const Blacklist = () => {
     ? changedata(data).filter((item: any) =>
         search === ""
           ? item
-          : item.username.toLowerCase().includes(search.toLowerCase()) &&
-            item.banided === true
+          : item.username.toLowerCase().includes(search.toLowerCase())
       )
     : [];
   const handlePageChange = (
